@@ -1,20 +1,23 @@
-import { useRouter } from "next/router";
+"use client";
+
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation"; // Import useSearchParams
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import questions from "../data/questions"; // Import questions from data
+import questions from "../../../data/questions";
 
 export default function Results() {
-  const router = useRouter();
+  const searchParams = useSearchParams(); // Use useSearchParams to get searchParams
   const [responses, setResponses] = useState({});
   const [score, setScore] = useState(0);
   const [chartOptions, setChartOptions] = useState({});
 
   // Effect to run when query data is available
   useEffect(() => {
-    if (router.query.data) {
+    const data = searchParams.get("data"); // Use .get() to access query parameters
+    if (data) {
       // Parse the responses from query string
-      const parsedResponses = JSON.parse(router.query.data);
+      const parsedResponses = JSON.parse(decodeURIComponent(data));
       setResponses(parsedResponses);
 
       // Now, let's calculate the total weighted score and prepare chart data
@@ -72,7 +75,7 @@ export default function Results() {
         setScore(((totalScore / totalWeight) * 100).toFixed(2)); // Final score as percentage
       }
     }
-  }, [router.query.data]);
+  }, [searchParams]); // Add searchParams as a dependency
 
   return (
     <div className="p-8 max-w-3xl mx-auto">

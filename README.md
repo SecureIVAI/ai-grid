@@ -4,6 +4,21 @@ This website for provide an interactive survey for organizations of any size to 
 
 ## To get started 
 
-npm install next react react-dom
+>npm install
 
-npm install highcharts highcharts-react-official
+To install all needed dependancies
+
+>npx auth secret
+
+To generate a random value used for Auth.js, this creates a .enc.local file at root
+
+
+>npm run dev
+
+To run the application locally on your machine for testing
+
+
+### Test sign-in credentials
+
+For now, credentials are [name]@gmail.com (I've added test users for all 6 of us)
+Password: password
