@@ -1,49 +1,75 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-
-const questions = [
-  { id: 1, question: "Has your organization implemented any policies related to AI use and management", type: "yesno" },
-  { id: 2, question: "Do you have an AI governance framework", type: "yesno" },
-  { id: 3, question: "Does your organization have a documented risk management process specifically for AI systems, covering potential risks throughout their life cycle?", type: "yesno" },
-];
+import questions from "../data/questions";
 
 export default function Survey() {
-  const [answers, setAnswers] = useState({});
-  const [currentIndex, setCurrentIndex] = useState(0);
   const router = useRouter();
+  const [responses, setResponses] = useState({});
 
-  const handleAnswer = (answer) => {
-    const newAnswers = { ...answers, [questions[currentIndex].id]: answer };
-    setAnswers(newAnswers);
-
-    if (answer === "yes" && currentIndex === 0) {
-      setCurrentIndex(currentIndex + 1); // Skip a question if the answer is "yes"
-    } else {
-      setCurrentIndex(currentIndex + 2);
-    }
+  const handleChange = (section, index, value) => {
+    setResponses((prev) => ({
+      ...prev,
+      [`${section}-${index}`]: value, 
+    }));
   };
-
-  if (currentIndex >= questions.length) {
-    localStorage.setItem("surveyResults", JSON.stringify(answers));
-    router.push("/results");
-    return <p>Processing results...</p>;
-  }
+  
+  const handleSubmit = () => {
+    const responsesData = JSON.stringify(responses);
+  
+    router.push({
+      pathname: "/results",
+      query: { data: responsesData },
+    });
+  };
+  
 
   return (
-    <div className="p-4">
-      <h2>{questions[currentIndex].question}</h2>
-      {questions[currentIndex].type === "yesno" && (
-        <div>
-          <button onClick={() => handleAnswer("yes")}>Yes</button>
-          <button onClick={() => handleAnswer("no")}>No</button>
+    <div className="p-8 max-w-3xl mx-auto">
+      <h1 className="text-2xl font-bold mb-4">ISO 42001 Compliance Survey</h1>
+      {questions.map((section) => (
+        <div key={section.section} className="mb-6">
+          <h2 className="text-lg font-semibold">{section.section}</h2>
+          <p className="text-gray-600">{section.objective}</p>
+          {section.questions.map((q, index) => (
+            <div key={index} className="mt-4">
+              <label className="block font-medium">{q.text}</label>
+              {q.type === "yesno" ? (
+                <select
+                  onChange={(e) => handleChange(section.section, index, e.target.value)}
+                  className="w-full p-2 border rounded"
+                >
+                  <option value="">Select</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              ) : q.type === "likert" ? (
+                <div className="flex flex-col items-center">
+                  <span className="font-semibold text-gray-700">
+                    {responses[`${section.section}-${index}`]?.value || "3"}
+                  </span>
+                  <input
+                    type="range"
+                    min="1"
+                    max="5"
+                    value={responses[`${section.section}-${index}`]?.value || "3"}
+                    onChange={(e) => handleChange(section.section, index, e.target.value)}
+                    className="w-full"
+                  />
+                </div>
+              ) : (
+                <input
+                  type="text"
+                  onChange={(e) => handleChange(section.section, index, e.target.value)}
+                  className="w-full p-2 border rounded"
+                />
+              )}
+            </div>
+          ))}
         </div>
-      )}
-      {questions[currentIndex].type === "text" && (
-        <input type="text" onBlur={(e) => handleAnswer(e.target.value)} />
-      )}
-      {questions[currentIndex].type === "number" && (
-        <input type="number" onBlur={(e) => handleAnswer(e.target.value)} />
-      )}
+      ))}
+      <button onClick={handleSubmit} className="bg-indigo-600 text-white px-4 py-2 rounded mt-4">
+        Submit
+      </button>
     </div>
   );
 }
