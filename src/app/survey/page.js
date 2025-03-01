@@ -42,7 +42,7 @@ export default function Survey() {
 
   return (
     <div className="p-8 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">ISO 42001 Compliance Survey</h1>
+      <h1 className="text-2xl font-bold mb-2">ISO 42001 Compliance Survey</h1>
       {questions.map((section) => (
         <div key={section.section} className="mb-6">
           <h2 className="text-lg font-semibold">{section.section}</h2>
@@ -51,28 +51,40 @@ export default function Survey() {
             <div key={index} className="mt-4">
               <label className="block font-medium">{q.text}</label>
               {q.type === "yesno" ? (
-                <select
-                  onChange={(e) => handleChange(section, index, e.target.value)}
-                  className="w-full p-2 border rounded"
-                >
-                  <option value="">Select</option>
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
-                </select>
+                <>
+                  <input type="radio" id={"yesbox"+q.text} name={q.text} value="yes" />
+                  <label for={"yesbox"+q.text}> Yes &emsp;&emsp;</label>
+                  <input type="radio" id={"nobox"+q.text} name={q.text} value="no" />
+                  <label for={"nobox"+q.text}> No</label>
+                </>
               ) : q.type === "likert" ? (
                 <div className="flex flex-col items-center">
-                  <span className="font-semibold text-gray-700">
-                    {responses[`${section.section}-${index}`] || "3"} {/* Display the current value */}
-                  </span>
                   <input
                     type="range"
+                    list="rangeslider"
                     min="1"
                     max="5"
                     value={responses[`${section.section}-${index}`] || "3"} // Set the value from responses
                     onChange={(e) => handleChange(section, index, e.target.value)}
                     className="w-full"
                   />
+                  <datalist id="rangeslider">
+                    <option value="1">Very Bad</option>
+                    <option value="2">Bad</option>
+                    <option value="3">Okay</option>
+                    <option value="4">Good</option>
+                    <option value="5">Very Good</option>
+                  </datalist>
                 </div>
+              ) : q.type === "dropdown" ? (
+                <select
+                  onChange={(e) => handleChange(section, index, e.target.value)}
+                  className="w-full p-2 border rounded"
+                >
+                  <option value="">Select</option>
+                  <option value="Yearly">Yearly</option>
+                  <option value="Bi-Yearly">Bi-Yearly</option>
+                </select>
               ) : (
                 <input
                   type="text"

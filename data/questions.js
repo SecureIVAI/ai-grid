@@ -52,7 +52,7 @@ const questions = [
         },
         {
           text: "How frequently are AI risk assessments conducted?",
-          type: "likert",
+          type: "dropdown",
           weight: 8,
         },
         {
