@@ -23,12 +23,12 @@ export default function Navbar() {
                 <span className="text-sm font-medium text-gray-700">
                   {session.user?.name}
                 </span>
-                <button
-                  onClick={() => signOut()}
-                  className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 transition-colors"
+              <button
+                onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
+                className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 transition-colors"
                 >
                   Sign Out
-                </button>
+              </button>
               </div>
             ) : (
               <Link
