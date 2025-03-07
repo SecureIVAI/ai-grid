@@ -53,9 +53,9 @@ export default function Survey() {
               {q.type === "yesno" ? (
                 <>
                   <input type="radio" id={"yesbox"+q.text} name={q.text} value="yes" />
-                  <label for={"yesbox"+q.text}> Yes &emsp;&emsp;</label>
+                  <label htmlFor={"yesbox"+q.text}> Yes &emsp;&emsp;</label>
                   <input type="radio" id={"nobox"+q.text} name={q.text} value="no" />
-                  <label for={"nobox"+q.text}> No</label>
+                  <label htmlFor={"nobox"+q.text}> No</label>
                 </>
               ) : q.type === "likert" ? (
                 <div className="flex flex-col items-center">
@@ -81,9 +81,9 @@ export default function Survey() {
                   onChange={(e) => handleChange(section, index, e.target.value)}
                   className="w-full p-2 border rounded"
                 >
-                  <option value="">Select</option>
-                  <option value="Yearly">Yearly</option>
-                  <option value="Bi-Yearly">Bi-Yearly</option>
+                  <option value="0">Select</option>
+                  <option value="1">Yearly</option>
+                  <option value="2">Bi-Yearly</option>
                 </select>
               ) : (
                 <input

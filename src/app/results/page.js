@@ -39,6 +39,8 @@ export default function Results() {
             } else if (q.type === "likert") {
               // Assume that a Likert scale response is between 1-5, we scale it to the weight
               score = (parseInt(responseValue) / 5) * weight;
+            } else if (q.type === "dropdown") {
+              score = parseInt(responseValue) * weight;
             }
             sectionTotal += score;
             totalScore += score;
@@ -111,6 +113,8 @@ export default function Results() {
                 score = responseValue === "yes" ? weight : 0;
               } else if (q.type === "likert") {
                 score = (parseInt(responseValue) / 5) * weight;
+              } else if (q.type === "dropdown") {
+                score = parseInt(responseValue) * weight;
               }
               sectionTotal += score;
             }
