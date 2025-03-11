@@ -5,7 +5,15 @@ import { useRouter } from "next/navigation";
 
 export default function SurveySection({ sectionData, nextPath }) {
   const router = useRouter();
-  const [responses, setResponses] = useState({});
+  const [responses, setResponses] = useState(() => {
+    const defaultValues = {};
+    sectionData.questions.forEach((q, index) => {
+      if (q.type === "likert") {
+        defaultValues[`${sectionData.section}-${index}`] = "3"; 
+      }
+    });
+    return defaultValues;
+  });
 
   const handleChange = (index, value) => {
     setResponses((prev) => ({
