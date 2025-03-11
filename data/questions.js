@@ -53,6 +53,12 @@ const questions = [
         {
           text: "How frequently are AI risk assessments conducted?",
           type: "dropdown",
+          options: [
+            { value: "1", label: "Yearly" },
+            { value: "2", label: "Bi-Yearly" },
+            { value: "3", label: "Quarterly" },
+            { value: "4", label: "Monthly" }
+          ],
           weight: 8,
         },
         {
