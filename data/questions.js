@@ -89,6 +89,54 @@ const questions = [
         },
       ],
     },
+    {
+      section: "AI System Security",
+      objective: "Ensure AI systems are secure and resilient against threats.",
+      questions: [
+        {
+          text: "Are AI models tested for vulnerabilities before deployment?",
+          type: "yesno",
+          weight: 10,
+        },
+        {
+          text: "How often are AI security assessments conducted?",
+          type: "dropdown",
+          options: [
+            { value: "1", label: "Annually" },
+            { value: "2", label: "Bi-Annually" },
+            { value: "3", label: "Quarterly" },
+            { value: "4", label: "Monthly" }
+          ],
+          weight: 8,
+        },
+        {
+          text: "Does your organization have a response plan for AI-related security breaches?",
+          type: "yesno",
+          weight: 10,
+        },
+      ],
+    },
+    {
+      section: "Ethical AI Compliance",
+      objective: "Ensure AI systems adhere to ethical guidelines and compliance requirements.",
+      questions: [
+        {
+          text: "Does your organization have an AI ethics framework?",
+          type: "yesno",
+          weight: 10,
+        },
+        {
+          text: "Are AI decisions explainable and interpretable?",
+          type: "yesno",
+          weight: 9,
+        },
+        {
+          text: "Is there an external audit process for AI compliance?",
+          type: "yesno",
+          weight: 8,
+        },
+      ],
+    },
   ];
   
   export default questions;

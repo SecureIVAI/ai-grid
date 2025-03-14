@@ -5,10 +5,10 @@ import questions from "../../../../data/questions";
 
 export default function DataGovernance() {
   const dataGovernanceQuestions = questions.find(
-    (section) => section.section === "Data Governance"
+    (section) => section.section === "Ethical AI Compliance"
   );
 
   return <div className="flex flex-col items-center justify-start pt-24 min-h-screen bg-gray-50 p-4">
-    <SurveySection sectionData={dataGovernanceQuestions} nextPath="/survey/ai-system-security" />;
+    <SurveySection sectionData={dataGovernanceQuestions} nextPath="/results" />;
     </div>
 }
