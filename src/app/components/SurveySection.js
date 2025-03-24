@@ -9,11 +9,13 @@ export default function SurveySection({ sectionData, nextPath }) {
     const defaultValues = {};
     sectionData.questions.forEach((q, index) => {
       if (q.type === "likert") {
-        defaultValues[`${sectionData.section}-${index}`] = "3"; 
+        defaultValues[`${sectionData.section}-${index}`] = "3";
       }
     });
     return defaultValues;
   });
+
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const handleChange = (index, value) => {
     setResponses((prev) => ({
@@ -25,15 +27,32 @@ export default function SurveySection({ sectionData, nextPath }) {
   const handleNext = () => {
     const storedResponses = JSON.parse(localStorage.getItem("responses")) || {};
     const updatedResponses = { ...storedResponses, ...responses };
-    
+
     localStorage.setItem("responses", JSON.stringify(updatedResponses));
     router.push(nextPath);
   };
-  
+
+  const tooltipText =
+    sectionData.tooltipText ||
+    "Hover over the title for more information about this section.";
 
   return (
     <div className="p-8 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-2">{sectionData.section}</h1>
+      {/* Dynamic Title with Tooltip */}
+      <div
+        className="relative inline-block"
+        onMouseEnter={() => setShowTooltip(true)}
+        onMouseLeave={() => setShowTooltip(false)}
+      >
+        <h1 className="text-2xl font-bold mb-2">{sectionData.section}</h1>
+
+        {/* Tooltip */}
+        {showTooltip && (
+          <div className="absolute left-0 bottom-full mb-2 p-2 w-64 bg-gray-700 text-white text-sm rounded shadow-lg">
+            {tooltipText}
+          </div>
+        )}
+      </div>
       <p className="text-gray-600 mb-4">{sectionData.objective}</p>
 
       {sectionData.questions.map((q, index) => (

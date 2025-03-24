@@ -2,6 +2,7 @@ const questions = [
     {
       section: "Policies Related to AI",
       objective: "Ensure AI policies align with organizational goals.",
+      tooltipText: "This section is about policies related to AI",
       questions: [
         {
           text: "Does your organization have a documented AI policy?",
@@ -23,6 +24,7 @@ const questions = [
     {
       section: "Internal Organization",
       objective: "Define clear AI management roles and responsibilities.",
+      tooltipText: "This section is about internal organization",
       questions: [
         {
           text: "Have roles and responsibilities for AI management been clearly defined?",
@@ -44,6 +46,7 @@ const questions = [
     {
       section: "Risk Management",
       objective: "Ensure AI-related risks are identified and mitigated.",
+      tooltipText: "This section is about risk management",
       questions: [
         {
           text: "Does your organization conduct AI risk assessments?",
@@ -71,6 +74,7 @@ const questions = [
     {
       section: "Data Governance",
       objective: "Ensure data used in AI systems is high-quality and secure.",
+      tooltipText: "This section is about data governance",
       questions: [
         {
           text: "Is there a formal data governance policy for AI models?",
@@ -92,6 +96,7 @@ const questions = [
     {
       section: "AI System Security",
       objective: "Ensure AI systems are secure and resilient against threats.",
+      tooltipText: "This section is about AI system security",
       questions: [
         {
           text: "Are AI models tested for vulnerabilities before deployment?",
@@ -119,6 +124,7 @@ const questions = [
     {
       section: "Ethical AI Compliance",
       objective: "Ensure AI systems adhere to ethical guidelines and compliance requirements.",
+      tooltipText: "This section is about ethical ai compliance",
       questions: [
         {
           text: "Does your organization have an AI ethics framework?",
