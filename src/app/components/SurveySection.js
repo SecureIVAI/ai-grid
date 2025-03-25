@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 export default function SurveySection({ sectionData, nextPath }) {
   const router = useRouter();
+  const [showFollowUp, setShowFollowUp] = useState({});
   const [responses, setResponses] = useState(() => {
     const defaultValues = {};
     sectionData.questions.forEach((q, index) => {
@@ -17,10 +18,23 @@ export default function SurveySection({ sectionData, nextPath }) {
 
   const [showTooltip, setShowTooltip] = useState(false);
 
-  const handleChange = (index, value) => {
+  const handleChange = (index, value, hasFollowUp) => {
     setResponses((prev) => ({
       ...prev,
       [`${sectionData.section}-${index}`]: value,
+    }));
+    
+    if (hasFollowUp) {
+      setShowFollowUp((prev) => ({
+        ...prev,
+        [`${sectionData.section}-${index}`]: value === "yes",
+      }));
+    }
+  };
+  const handleFileChange = (index, file) => {
+    setResponses((prev) => ({
+      ...prev,
+      [`${sectionData.section}-${index}-file`]: file,
     }));
   };
 
@@ -65,7 +79,7 @@ export default function SurveySection({ sectionData, nextPath }) {
                 id={`yesbox-${index}`}
                 name={`question-${index}`}
                 value="yes"
-                onChange={(e) => handleChange(index, "yes")}
+                onChange={(e) => handleChange(index, "yes", q.followUp)}
               />
               <label htmlFor={`yesbox-${index}`}> Yes &emsp;&emsp;</label>
 
@@ -74,10 +88,39 @@ export default function SurveySection({ sectionData, nextPath }) {
                 id={`nobox-${index}`}
                 name={`question-${index}`}
                 value="no"
-                onChange={(e) => handleChange(index, "no")}
+                onChange={(e) => handleChange(index, "no", q.followUp)}
               />
               <label htmlFor={`nobox-${index}`}> No</label>
+              
+              {/* Display Follow-Up Question if applicable */}
+              {q.followUp && showFollowUp[`${sectionData.section}-${index}`] && (
+                <div className="mt-2 ml-4">
+                  <label className="block font-medium">{q.followUp.text}</label>
+
+                  {q.followUp.type === "file" ? (
+                    <input
+                      type="file"
+                      onChange={(e) =>
+                        handleFileChange(index, e.target.files[0])
+                      }
+                      className="w-full p-2 border rounded"
+                    />
+                  ) : (
+                    <input
+                      type="text"
+                      onChange={(e) =>
+                        setResponses((prev) => ({
+                          ...prev,
+                          [`${sectionData.section}-${index}-followUp`]: e.target.value,
+                        }))
+                      }
+                      className="w-full p-2 border rounded"
+                    />
+                  )}
+                </div>
+              )}
             </>
+          
           ) : q.type === "likert" ? (
             <div className="flex flex-col items-center">
               <input

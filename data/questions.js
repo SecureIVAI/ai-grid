@@ -8,6 +8,10 @@ const questions = [
           text: "Does your organization have a documented AI policy?",
           type: "yesno",
           weight: 10,
+          followUp: {
+            type: "file",
+            text: "Please Provide the document."
+          }
         },
         {
           text: "To what extent does your AI policy align with existing organizational policies?",
