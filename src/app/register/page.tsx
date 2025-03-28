@@ -1,41 +1,51 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { signIn } from "next-auth/react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-export default function SignIn() {
+export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
 
-  useEffect(() => {
-    setEmail("");
-    setPassword("");
-  }, []);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const result = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
+    
+    // Basic validation
+    if (password !== confirmPassword) {
+      setError("Passwords don't match");
+      return;
+    }
 
-    if (result?.error) {
-      console.error("Login error:", result.error);
-      setError("Invalid email or password");
-    } else {
-      router.push("/");
+    try {
+      // Placeholder until we implement the actual API
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Registration failed');
+      }
+
+      // Redirect to sign-in page after successful registration
+      router.push("/signin");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Registration failed. Please try again.");
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 text-black">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
-        <h1 className="text-2xl font-bold text-center">Sign In</h1>
+        <h1 className="text-2xl font-bold text-center">Create Account</h1>
         {error && <p className="text-red-500 text-center">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -63,23 +73,31 @@ export default function SignIn() {
               className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               required
             />
-            <div className="flex justify-end mt-2">
-              <Link href="/forgot-password" className="text-sm text-indigo-600 hover:text-indigo-500">
-                Forgot password?
-              </Link>
-            </div>
+          </div>
+          <div>
+            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              id="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              required
+            />
           </div>
           <div className="space-y-4">
             <button
               type="submit"
               className="w-full px-4 py-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
-              Sign In
+              Register
             </button>
             <div className="text-center text-sm text-gray-600">
-              Don't have an account?{" "}
-              <Link href="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
-                Register
+              Already have an account?{" "}
+              <Link href="/signin" className="font-medium text-indigo-600 hover:text-indigo-500">
+                Sign in
               </Link>
             </div>
           </div>
