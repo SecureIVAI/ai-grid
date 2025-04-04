@@ -130,14 +130,14 @@ export default function SurveySection({ sectionData, nextPath }) {
                 max="5"
                 value={responses[`${sectionData.section}-${index}`] || "3"}
                 onChange={(e) => handleChange(index, e.target.value)}
-                className="w-full"
+                className="w-[90%] mb-2"
               />
-              <datalist id="rangeslider">
-                <option value="1">Very Bad</option>
-                <option value="2">Bad</option>
-                <option value="3">Okay</option>
-                <option value="4">Good</option>
-                <option value="5">Very Good</option>
+              <datalist id="rangeslider" className="text-xs">
+                <option value="1">Non-compliant</option>
+                <option value="2">Minimally Compliant</option>
+                <option value="3">Partially Compliant</option>
+                <option value="4">Substantially Compliant</option>
+                <option value="5">Fully Compliant</option>
               </datalist>
             </div>
           ) : q.type === "dropdown" ? (
