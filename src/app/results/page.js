@@ -60,11 +60,8 @@ export default function Results() {
       setScore(((totalScore / totalWeight) * 100).toFixed(2));
     }
   
-    // Clear stored responses *after* state updates
-    setTimeout(() => {
-      localStorage.removeItem("responses");
-    }, 0);
   }, []);
+  
   
   
 

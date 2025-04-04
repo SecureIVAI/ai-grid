@@ -17,10 +17,19 @@
   }
 }
 
+/* Ensure full height and zero margin/padding */
+html, body {
+  height: 100%; /* Full height of the viewport */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  display: flex; /* Flexbox layout for centering content */
+  flex-direction: column; /* Align content vertically */
 }
 
 input[type=range] {
@@ -30,19 +39,22 @@ input[type=range] {
 }
 
 input[type=range] + datalist {
-    display: flex;
-    margin-top: -4px;
+  display: flex;
+  margin-top: -4px;
 }
+
 input[type=range] + datalist option {
-    display: inline-block;
-    width: calc((700px) / (4));
-    text-align: center;
+  display: inline-block;
+  width: calc((700px) / (4));
+  text-align: center;
 }
+
 input[type=range] + datalist option:first-child {
-    width: calc((775px) / ((4) * 2) + 6px);
-    text-align: left;
+  width: calc((775px) / ((4) * 2) + 6px);
+  text-align: left;
 }
+
 input[type=range] + datalist option:last-child {
-    width: calc((775px) / ((4) * 2) + 6px);
-    text-align: right;
+  width: calc((775px) / ((4) * 2) + 6px);
+  text-align: right;
 }

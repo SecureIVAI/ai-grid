@@ -32,10 +32,24 @@ export default function SurveySection({ sectionData, nextPath }) {
     }
   };
   const handleFileChange = (index, file) => {
-    setResponses((prev) => ({
-      ...prev,
-      [`${sectionData.section}-${index}-file`]: file,
-    }));
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const storedResponses = JSON.parse(localStorage.getItem("responses")) || {};
+      const updatedResponses = {
+        ...storedResponses,
+        [`${sectionData.section}-${index}-file`]: {
+          name: file.name,
+          data: reader.result, // Base64 data for previewing
+        },
+      };
+
+    localStorage.setItem("responses", JSON.stringify(updatedResponses));
+    setResponses(updatedResponses);
+  };
+
+  if (file) {
+    reader.readAsDataURL(file); // Convert file to Base64
+  }
   };
 
   const handleNext = () => {
@@ -130,14 +144,14 @@ export default function SurveySection({ sectionData, nextPath }) {
                 max="5"
                 value={responses[`${sectionData.section}-${index}`] || "3"}
                 onChange={(e) => handleChange(index, e.target.value)}
-                className="w-full"
+                className="w-[90%] mb-2"
               />
-              <datalist id="rangeslider">
-                <option value="1">Very Bad</option>
-                <option value="2">Bad</option>
-                <option value="3">Okay</option>
-                <option value="4">Good</option>
-                <option value="5">Very Good</option>
+              <datalist id="rangeslider" className="text-xs">
+                <option value="1">Non-compliant</option>
+                <option value="2">Minimally Compliant</option>
+                <option value="3">Partially Compliant</option>
+                <option value="4">Substantially Compliant</option>
+                <option value="5">Fully Compliant</option>
               </datalist>
             </div>
           ) : q.type === "dropdown" ? (
