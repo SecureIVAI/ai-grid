@@ -32,10 +32,24 @@ export default function SurveySection({ sectionData, nextPath }) {
     }
   };
   const handleFileChange = (index, file) => {
-    setResponses((prev) => ({
-      ...prev,
-      [`${sectionData.section}-${index}-file`]: file,
-    }));
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const storedResponses = JSON.parse(localStorage.getItem("responses")) || {};
+      const updatedResponses = {
+        ...storedResponses,
+        [`${sectionData.section}-${index}-file`]: {
+          name: file.name,
+          data: reader.result, // Base64 data for previewing
+        },
+      };
+
+    localStorage.setItem("responses", JSON.stringify(updatedResponses));
+    setResponses(updatedResponses);
+  };
+
+  if (file) {
+    reader.readAsDataURL(file); // Convert file to Base64
+  }
   };
 
   const handleNext = () => {
