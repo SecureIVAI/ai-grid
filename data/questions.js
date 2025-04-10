@@ -1,154 +1,137 @@
 const questions = [
-    {
-      section: "Policies Related to AI",
-      objective: "Ensure AI policies align with organizational goals.",
-      tooltipText: "This section is about policies related to AI",
-      questions: [
-        {
-          text: "Does your organization have a documented AI policy?",
-          type: "yesno",
-          weight: 10,
-          followUp: {
-            title: "AI Policy Document",
-            type: "file",
-            text: "Please Provide the document."
-          }
-        },
-        {
-          text: "To what extent does your AI policy align with existing organizational policies?",
-          type: "likert",
-          weight: 8,
-        },
-        {
-          text: "Has your AI policy been reviewed within the last 12 months?",
-          type: "yesno",
-          weight: 7,
-        },
-      ],
-    },
-    {
-      section: "Internal Organization",
-      objective: "Define clear AI management roles and responsibilities.",
-      tooltipText: "This section is about internal organization",
-      questions: [
-        {
-          text: "Have roles and responsibilities for AI management been clearly defined?",
-          type: "yesno",
-          weight: 9,
-        },
-        {
-          text: "Do employees receive training on AI-related policies and risks?",
-          type: "yesno",
-          weight: 8,
-        },
-        {
-          text: "Rate your organization's level of AI governance maturity.",
-          type: "likert",
-          weight: 10,
-        },
-      ],
-    },
-    {
-      section: "Risk Management",
-      objective: "Ensure AI-related risks are identified and mitigated.",
-      tooltipText: "This section is about risk management",
-      questions: [
-        {
-          text: "Does your organization conduct AI risk assessments?",
-          type: "yesno",
-          weight: 10,
-        },
-        {
-          text: "How frequently are AI risk assessments conducted?",
-          type: "dropdown",
-          options: [
-            { value: "1", label: "Yearly" },
-            { value: "2", label: "Bi-Yearly" },
-            { value: "3", label: "Quarterly" },
-            { value: "4", label: "Monthly" }
-          ],
-          weight: 8,
-        },
-        {
-          text: "Are AI-related risks included in enterprise-wide risk management?",
-          type: "yesno",
-          weight: 9,
-        },
-      ],
-    },
-    {
-      section: "Data Governance",
-      objective: "Ensure data used in AI systems is high-quality and secure.",
-      tooltipText: "This section is about data governance",
-      questions: [
-        {
-          text: "Is there a formal data governance policy for AI models?",
-          type: "yesno",
-          weight: 10,
-        },
-        {
-          text: "How would you rate the transparency of your AI data sources?",
-          type: "likert",
-          weight: 7,
-        },
-        {
-          text: "Are bias mitigation techniques applied to AI training data?",
-          type: "yesno",
-          weight: 9,
-        },
-      ],
-    },
-    {
-      section: "AI System Security",
-      objective: "Ensure AI systems are secure and resilient against threats.",
-      tooltipText: "This section is about AI system security",
-      questions: [
-        {
-          text: "Are AI models tested for vulnerabilities before deployment?",
-          type: "yesno",
-          weight: 10,
-        },
-        {
-          text: "How often are AI security assessments conducted?",
-          type: "dropdown",
-          options: [
-            { value: "1", label: "Annually" },
-            { value: "2", label: "Bi-Annually" },
-            { value: "3", label: "Quarterly" },
-            { value: "4", label: "Monthly" }
-          ],
-          weight: 8,
-        },
-        {
-          text: "Does your organization have a response plan for AI-related security breaches?",
-          type: "yesno",
-          weight: 10,
-        },
-      ],
-    },
-    {
-      section: "Ethical AI Compliance",
-      objective: "Ensure AI systems adhere to ethical guidelines and compliance requirements.",
-      tooltipText: "This section is about ethical ai compliance",
-      questions: [
-        {
-          text: "Does your organization have an AI ethics framework?",
-          type: "yesno",
-          weight: 10,
-        },
-        {
-          text: "Are AI decisions explainable and interpretable?",
-          type: "yesno",
-          weight: 9,
-        },
-        {
-          text: "Is there an external audit process for AI compliance?",
-          type: "yesno",
-          weight: 8,
-        },
-      ],
-    },
-  ];
-  
-  export default questions;
-  
+  {
+    section: "context",
+    title: "Context of the Organization",
+    objective: "Understand the internal and external context relevant to the AI management system.",
+    tooltipText: "This section aligns with clauses 4.1 to 4.4 of the AI management system standard.",
+    questions: [
+      {
+        text: "Has the organization determined any external issues that are relevant to its purpose and that affect its ability to achieve the intended results of its AI management system?",
+        type: "yesno",
+        weight: 10,
+        followUp: {
+          title: "External Issues",
+          type: "file",
+          text: "Please list or upload supporting documentation."
+        }
+      },
+      {
+        text: "Has the organization determined any internal issues that are relevant to its purpose and that affect its ability to achieve the intended results of its AI management system?",
+        type: "yesno",
+        weight: 10,
+        followUp: {
+          title: "Internal Issues",
+          type: "file",
+          text: "Please list or upload supporting documentation."
+        }
+      },
+      {
+        text: "Has the organization determined whether climate change is a relevant issue in the context of its AI management system?",
+        type: "yesno",
+        weight: 9
+      },
+      {
+        text: "Has the organization considered the intended purpose of the AI systems that are developed, provided, or used by the organization?",
+        type: "yesno",
+        weight: 9,
+        followUp: {
+          title: "AI System Purposes",
+          type: "file",
+          text: "Please list or upload supporting documentation."
+        }
+      },
+      {
+        text: "Has the organization determined its role with respect to the AI systems that are developed, provided, or used by the organization?",
+        type: "yesno",
+        weight: 9,
+        followUp: {
+          title: "AI System Roles",
+          type: "file",
+          text: "Please list or upload supporting documentation."
+        }
+      },
+      {
+        text: "Has the organization identified the interested parties that are relevant to its AI management system?",
+        type: "yesno",
+        weight: 10,
+        followUp: {
+          title: "Interested Parties",
+          type: "file",
+          text: "Please list or upload documentation."
+        }
+      },
+      {
+        text: "Has the organization determined the relevant requirements of these interested parties?",
+        type: "yesno",
+        weight: 9,
+        followUp: {
+          title: "Stakeholder Requirements",
+          type: "file",
+          text: "Please list or upload documentation."
+        }
+      },
+      {
+        text: "Has the organization decided which of these requirements will be addressed through its AI management system?",
+        type: "yesno",
+        weight: 9,
+        followUp: {
+          title: "Selected Requirements",
+          type: "file",
+          text: "Please list or upload documentation."
+        }
+      },
+      {
+        text: "Has the organization determined the boundaries and applicability of its AI management system in order to establish its scope?",
+        type: "yesno",
+        weight: 8
+      },
+      {
+        text: "When determining the scope of its AI management system, has the organization considered external and internal issues as referred to in previous questions?",
+        type: "yesno",
+        weight: 8
+      },
+      {
+        text: "When determining the scope of its AI management system, has the organization considered interested parties, their requirements, and which of these requirements will be addressed?",
+        type: "yesno",
+        weight: 8
+      },
+      {
+        text: "Is the scope of the AI management system available as documented information?",
+        type: "yesno",
+        weight: 10,
+        followUp: {
+          title: "Scope Document",
+          type: "file",
+          text: "Please upload the scope documentation."
+        }
+      },
+      {
+        text: "Does the organization determine the scope of its AI management system to include activities related to leadership, planning, support, operation, performance, evaluation, improvement, controls, and objectives?",
+        type: "yesno",
+        weight: 9
+      },
+      {
+        text: "Has the organization established and implemented an AI management system that defines responsibilities, processes, and controls for managing AI-related activities?",
+        type: "yesno",
+        weight: 10
+      },
+      {
+        text: "Is the above AI management system continually maintained and improved by the organization?",
+        type: "yesno",
+        weight: 9
+      },
+      {
+        text: "Has the organization documented the above AI management system, including the necessary processes and their interactions?",
+        type: "yesno",
+        weight: 10,
+        followUp: {
+          title: "AI Management System Documentation",
+          type: "file",
+          text: "Please upload all related documentation."
+        }
+      }
+    ]
+  }
+];
+
+export default questions;
