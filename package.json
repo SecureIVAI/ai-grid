@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "googleapis": "^148.0.0",
     "highcharts": "^12.1.2",
     "highcharts-react-official": "^3.2.1",
     "next": "15.2.0",

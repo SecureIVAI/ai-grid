@@ -31,26 +31,21 @@ export default function SurveySection({ sectionData, nextPath }) {
       }));
     }
   };
-  const handleFileChange = (index, file) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const storedResponses = JSON.parse(localStorage.getItem("responses")) || {};
-      const updatedResponses = {
-        ...storedResponses,
-        [`${sectionData.section}-${index}-file`]: {
-          name: file.name,
-          data: reader.result, // Base64 data for previewing
-        },
-      };
 
+  const handleLinkChange = (index, value) => {
+    const storedResponses = JSON.parse(localStorage.getItem("responses")) || {};
+    const updatedResponses = {
+      ...storedResponses,
+      [`${sectionData.section}-${index}-file`]: {
+        name: sectionData.questions[index]?.followUp?.title,
+        data: value, // Just the link
+      },
+    };
+  
     localStorage.setItem("responses", JSON.stringify(updatedResponses));
     setResponses(updatedResponses);
   };
-
-  if (file) {
-    reader.readAsDataURL(file); // Convert file to Base64
-  }
-  };
+  
 
   const handleNext = () => {
     const storedResponses = JSON.parse(localStorage.getItem("responses")) || {};
@@ -113,12 +108,11 @@ export default function SurveySection({ sectionData, nextPath }) {
 
                   {q.followUp.type === "file" ? (
                     <input
-                      type="file"
-                      onChange={(e) =>
-                        handleFileChange(index, e.target.files[0])
-                      }
+                    type="text"
+                      placeholder="Paste your Google Drive link here"
+                      onChange={(e) => handleLinkChange(index, e.target.value)}
                       className="w-full p-2 border rounded"
-                    />
+                    />       
                   ) : (
                     <input
                       type="text"
