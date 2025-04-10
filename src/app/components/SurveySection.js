@@ -161,6 +161,24 @@ export default function SurveySection({ sectionData, nextPath }) {
                 </option>
               ))}
             </select>
+          ) : q.type === "multiple-choice" ? (
+            // New case for multiple-choice question
+            <div className="flex flex-col">
+              {q.options.map((option, idx) => (
+                <div key={idx} className="flex items-center">
+                  <input
+                    type="radio"
+                    id={`radio-${sectionData.section}-${index}-${idx}`}
+                    name={`question-${index}`}
+                    value={option.value}
+                    onChange={(e) => handleChange(index, e.target.value)}
+                  />
+                  <label htmlFor={`radio-${sectionData.section}-${index}-${idx}`} className="ml-2">
+                    {option.label}
+                  </label>
+                </div>
+              ))}
+            </div>
           ) : (
             <input
               type="text"
