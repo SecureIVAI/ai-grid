@@ -19,7 +19,7 @@ export default function Home() {
       </p>
       {session ? (
       <button
-        onClick={() => router.push("/survey/policies")}
+        onClick={() => router.push("/survey/context")}
         className="px-8 py-3 text-lg font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
       >
         Start Survey
