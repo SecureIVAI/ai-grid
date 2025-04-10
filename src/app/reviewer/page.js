@@ -34,19 +34,22 @@ export default function ReviewerPage() {
               <div className="flex items-center justify-between">
                 <h2 className="font-medium">{fileData.name}</h2>
                 <div className="flex items-center space-x-4">
-                  {fileData.data.startsWith("data:image") ? (
-                    <img
-                      src={fileData.data}
-                      alt={fileData.name}
-                      className="mt-2 w-[100px] rounded shadow"
-                    />
+                  {fileData.data.includes("drive.google.com") ? (
+                    <a
+                      href={fileData.data}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 underline"
+                    >
+                      View Google Drive Link
+                    </a>
                   ) : (
                     <a
                       href={fileData.data}
                       download={fileData.name}
                       className="text-blue-600 underline"
                     >
-                      Download
+                      View Document
                     </a>
                   )}
                   <button

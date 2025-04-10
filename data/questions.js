@@ -9,6 +9,7 @@ const questions = [
           type: "yesno",
           weight: 10,
           followUp: {
+            title: "AI Policy Document",
             type: "file",
             text: "Please Provide the document."
           }
