@@ -1,21 +1,25 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function SurveySection({ sectionData, nextPath }) {
   const router = useRouter();
-  const [showFollowUp, setShowFollowUp] = useState({});
+  const pathname = usePathname();
+
+  // Load existing responses from localStorage or set defaults
   const [responses, setResponses] = useState(() => {
+    const storedResponses = JSON.parse(localStorage.getItem("responses")) || {};
     const defaultValues = {};
     sectionData.questions.forEach((q, index) => {
       if (q.type === "likert") {
-        defaultValues[`${sectionData.section}-${index}`] = "3";
+        defaultValues[`${sectionData.section}-${index}`] = "3"; // Default value for likert questions
       }
     });
-    return defaultValues;
+    return { ...defaultValues, ...storedResponses }; // Merge stored responses with defaults
   });
 
+  const [showFollowUp, setShowFollowUp] = useState({});
   const [showTooltip, setShowTooltip] = useState(false);
 
   const handleChange = (index, value, hasFollowUp) => {
@@ -23,7 +27,7 @@ export default function SurveySection({ sectionData, nextPath }) {
       ...prev,
       [`${sectionData.section}-${index}`]: value,
     }));
-    
+
     if (hasFollowUp) {
       setShowFollowUp((prev) => ({
         ...prev,
@@ -41,18 +45,24 @@ export default function SurveySection({ sectionData, nextPath }) {
         data: value, // Just the link
       },
     };
-  
+
     localStorage.setItem("responses", JSON.stringify(updatedResponses));
     setResponses(updatedResponses);
   };
-  
+
+  const handlePause = () => {
+    const storedResponses = JSON.parse(localStorage.getItem("responses")) || {};
+    const updatedResponses = { ...storedResponses, ...responses };
+    localStorage.setItem("responses", JSON.stringify(updatedResponses)); // Save data to localStorage
+    alert("Survey paused and progress saved!");
+  };
 
   const handleNext = () => {
     const storedResponses = JSON.parse(localStorage.getItem("responses")) || {};
     const updatedResponses = { ...storedResponses, ...responses };
+    localStorage.setItem("responses", JSON.stringify(updatedResponses)); // Save data to localStorage
 
-    localStorage.setItem("responses", JSON.stringify(updatedResponses));
-    router.push(nextPath);
+    router.push(nextPath); // Navigate to the next survey section
   };
 
   const tooltipText =
@@ -88,6 +98,7 @@ export default function SurveySection({ sectionData, nextPath }) {
                 id={`yesbox-${index}`}
                 name={`question-${index}`}
                 value="yes"
+                checked={responses[`${sectionData.section}-${index}`] === "yes"}
                 onChange={(e) => handleChange(index, "yes", q.followUp)}
               />
               <label htmlFor={`yesbox-${index}`}> Yes &emsp;&emsp;</label>
@@ -97,10 +108,11 @@ export default function SurveySection({ sectionData, nextPath }) {
                 id={`nobox-${index}`}
                 name={`question-${index}`}
                 value="no"
+                checked={responses[`${sectionData.section}-${index}`] === "no"}
                 onChange={(e) => handleChange(index, "no", q.followUp)}
               />
               <label htmlFor={`nobox-${index}`}> No</label>
-              
+
               {/* Display Follow-Up Question if applicable */}
               {q.followUp && showFollowUp[`${sectionData.section}-${index}`] && (
                 <div className="mt-2 ml-4">
@@ -108,11 +120,11 @@ export default function SurveySection({ sectionData, nextPath }) {
 
                   {q.followUp.type === "file" ? (
                     <input
-                    type="text"
+                      type="text"
                       placeholder="Paste your Google Drive link here"
                       onChange={(e) => handleLinkChange(index, e.target.value)}
                       className="w-full p-2 border rounded"
-                    />       
+                    />
                   ) : (
                     <input
                       type="text"
@@ -128,7 +140,6 @@ export default function SurveySection({ sectionData, nextPath }) {
                 </div>
               )}
             </>
-          
           ) : q.type === "likert" ? (
             <div className="flex flex-col items-center">
               <input
@@ -161,27 +172,28 @@ export default function SurveySection({ sectionData, nextPath }) {
                 </option>
               ))}
             </select>
-          ) : q.type === "multiple-choice" ? (
-            // New case for multiple-choice question
-            <div className="flex flex-col">
-              {q.options.map((option, idx) => (
-                <div key={idx} className="flex items-center">
-                  <input
-                    type="radio"
-                    id={`radio-${sectionData.section}-${index}-${idx}`}
-                    name={`question-${index}`}
-                    value={option.value}
-                    onChange={(e) => handleChange(index, e.target.value)}
-                  />
-                  <label htmlFor={`radio-${sectionData.section}-${index}-${idx}`} className="ml-2">
-                    {option.label}
-                  </label>
-                </div>
-              ))}
-            </div>
+            ) : q.type === "multiple-choice" ? (
+              // New case for multiple-choice question
+              <div className="flex flex-col">
+                {q.options.map((option, idx) => (
+                  <div key={idx} className="flex items-center">
+                    <input
+                      type="radio"
+                      id={`radio-${sectionData.section}-${index}-${idx}`}
+                      name={`question-${index}`}
+                      value={option.value}
+                      onChange={(e) => handleChange(index, e.target.value)}
+                    />
+                    <label htmlFor={`radio-${sectionData.section}-${index}-${idx}`} className="ml-2">
+                      {option.label}
+                    </label>
+                  </div>
+                ))}
+              </div>
           ) : (
             <input
               type="text"
+              value={responses[`${sectionData.section}-${index}`] || ""}
               onChange={(e) => handleChange(index, e.target.value)}
               className="w-full p-2 border rounded"
             />
@@ -189,10 +201,26 @@ export default function SurveySection({ sectionData, nextPath }) {
         </div>
       ))}
 
-      <div className="flex justify-end mt-4">
+      <div className="flex justify-end mt-4 gap-5">
+        {pathname !== "/survey/context" && (
+          <button
+            onClick={() => router.back()}
+            className="bg-indigo-600 text-white px-4 py-2 rounded hover:scale-110"
+          >
+            Back
+          </button>
+        )}
+
+        <button
+          onClick={handlePause}
+          className="bg-indigo-600 text-white px-4 py-2 rounded hover:scale-110"
+        >
+          Pause
+        </button>
+       
         <button
           onClick={handleNext}
-          className="bg-indigo-600 text-white px-4 py-2 rounded"
+          className="bg-indigo-600 text-white px-4 py-2 rounded hover:scale-110"
         >
           Next
         </button>

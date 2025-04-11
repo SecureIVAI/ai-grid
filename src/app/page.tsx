@@ -18,12 +18,20 @@ export default function Home() {
         Our survey adapts to your responses, guiding you through a tailored compliance process.
       </p>
       {session ? (
-      <button
-        onClick={() => router.push("/survey/context")}
-        className="px-8 py-3 text-lg font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      >
-        Start Survey
-      </button>)
+        <div className="flex  gap-4">
+        <button
+          onClick={() => router.push("/survey/context")}
+          className=" px-8 py-3 text-lg font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          Resume
+        </button>
+          <button
+          onClick={() => {localStorage.removeItem("responses"); router.push("/survey/context")}}
+          className="px-8 py-3 text-lg font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          Start Survey
+        </button>
+    
+      </div>)
       :
       (<button
         onClick={() => router.push("/signin")}
