@@ -2,15 +2,13 @@
 
 import { useParams, useRouter } from "next/navigation";
 import SurveySection from "../../components/SurveySection";
-import questionsData from "../../../../data/questions";
+import questionsData  from "../../../../data/questions";
 
 export default function DynamicSurveyPage() {
   const router = useRouter();
   const { section } = useParams();
   
   const questions = questionsData.questions;
-  
-  
 
   // Convert kebab-case from URL to match actual section name in data
   const formattedSection = section
@@ -18,17 +16,13 @@ export default function DynamicSurveyPage() {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 
-  // const sectionData = questions.find(
-  //   (q) => q.section.toLowerCase() === formattedSection.toLowerCase()
-  // );
-  const sectionData = Object.values(questions).find(
-    (q) => q.section && q.section.toLowerCase() === formattedSection.toLowerCase()
+  const sectionData = questions.find(
+    (q) => q.section.toLowerCase() === formattedSection.toLowerCase()
   );
-  
 
   // Define the index and next path based on the current section
-  const currentIndex = Object.values(questions).findIndex(
-    (q) => q.section && q.section.toLowerCase() === formattedSection.toLowerCase()
+  const currentIndex = questions.findIndex(
+    (q) => q.section.toLowerCase() === formattedSection.toLowerCase()
   );
 
   const nextPath =

@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import questions from "../../../data/questions";
+import questionsData from "../../../data/questions";
 
+const questions = questionsData.questions;
 export default function Results() {
   const searchParams = useSearchParams();
   const [responses, setResponses] = useState({});
