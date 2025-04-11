@@ -1,9 +1,8 @@
-"use client";
+"use client"
 
 import { useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -63,25 +62,14 @@ export default function SignIn() {
               className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               required
             />
-            <div className="flex justify-end mt-2">
-              <Link href="/forgot-password" className="text-sm text-indigo-600 hover:text-indigo-500">
-                Forgot password?
-              </Link>
-            </div>
           </div>
-          <div className="space-y-4">
+          <div>
             <button
               type="submit"
               className="w-full px-4 py-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               Sign In
             </button>
-            <div className="text-center text-sm text-gray-600">
-              Don't have an account?{" "}
-              <Link href="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
-                Register
-              </Link>
-            </div>
           </div>
         </form>
       </div>
