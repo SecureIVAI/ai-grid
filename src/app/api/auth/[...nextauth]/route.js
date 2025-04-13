@@ -1,64 +1,77 @@
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import NextAuth from 'next-auth'
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import CredentialsProvider from 'next-auth/providers/credentials'
+import prisma from '@/lib/prisma'
+import bcrypt from 'bcryptjs'
 
 export const authOptions = {
+  adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: 'Credentials',
+      type: "credentials",
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' }
       },
       async authorize(credentials) {
-        // TODO: Replace with actual user authentication
-        const testusers = [
-          { id: 1, email: "elijah@gmail.com", password: "password", name: "Elijah"},
-          { id: 2, email: "samer@gmail.com", password: "password", name: "Samer" },
-          { id: 3, email: "brandon@gmail.com", password: "password", name: "Brandon" },
-          { id: 4, email: "omer@gmail.com", password: "password", name: "Omer" },
-          { id: 5, email: "nathan@gmail.com", password: "password", name: "Nathan" },
-          { id: 6, email: "huy@gmail.com", password: "password", name: "Huy" },
-        ];
-
+        // check if credentials are provided
         if (!credentials?.email || !credentials?.password) {
-          throw new Error("Missing email or password");
+          throw new Error('Email and password are required')
         }
 
-        const user = testusers.find((user) => user.email === credentials.email);
+        // check if user exists in the database
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email.toLowerCase() }
+        })
 
-        if (!user) {
-          throw new Error("User not found");
+        if (!user || !user.password) {
+          throw new Error('User not found')
         }
 
-        if (user.password !== credentials.password) {
-          throw new Error("Invalid password");
+        // check if password is correct
+        // TODO: consider using a more secure hashing algorithm
+        const isValid = await bcrypt.compare(credentials.password, user.password)
+
+        if (!isValid) {
+          throw new Error('Invalid password')
         }
 
-        console.log("Authentication successful:", user);
-        return user;
-      },
-    }),
+        // if user is found and password is correct, return user object
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          role: user.role
+        }
+      }
+    })
   ],
+  session: {
+    strategy: 'jwt'
+  },
+  secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/signin",
+    signIn: '/signin',
   },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
+        token.id = user.id
+        token.role = user.role
       }
-      return token;
+      return token
     },
     async session({ session, token }) {
-      session.user.id = token.id;
-      return session;
-    },
+      session.user.id = token.id
+      session.user.role = token.role
+      return session
+    }
   },
-  secret: process.env.NEXTAUTH_SECRET,
-  debug: true,
-};
 
+  debug: process.env.NODE_ENV === 'development'
+}
 
-const handler = NextAuth(authOptions);
+const handler = NextAuth(authOptions)
 
-export { handler as GET, handler as POST };
+export { handler as GET, handler as POST }
