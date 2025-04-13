@@ -2,7 +2,7 @@
 
 This website for provide an interactive survey for organizations of any size to evaluate and recieve feedback on their AI Governance compliance according to the stanadards set in ISO/IEC 42001
 
-## Getting started 
+# Getting started 
 Clone the repo into your machine locally
 >cd ai-grid
 
@@ -10,7 +10,7 @@ Then to install all needed dependancies
 >npm install
 
 
-### Set up PostgreSQL
+## Set up PostgreSQL
 Create a PostgreSQL database locally (or using an online service)
 https://www.postgresql.org/download/
 
@@ -27,7 +27,7 @@ NEXTAUTH_URL="http://localhost:3000"
 
 To generate a random value used for Auth.js, paste this in place of `'your_auth_secret_string'`
 
-### Set up Prisma
+## Set up Prisma
 Prisma is used for communicating with out database more easily.
 To set it up:
 
@@ -36,6 +36,6 @@ To set it up:
 
 Run `npx prisma db push` whenever you make modifications to the database schema in `prisma/schema.prisma` to push those changes to the database.
 ``
-### Running the App
+## Running the App
 
 >npm run dev
