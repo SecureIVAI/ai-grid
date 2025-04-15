@@ -8,14 +8,9 @@ export default function ReviewerPage() {
   useEffect(() => {
     const fetchFiles = async () => {
       try {
-        console.log("Fetching files...");
         const response = await fetch("http://localhost:3000/files");
-        console.log("Response:", response);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
-        console.log("Data:", data);
         setFiles(data);
       } catch (error) {
         console.error("Error fetching files:", error);
@@ -24,6 +19,23 @@ export default function ReviewerPage() {
 
     fetchFiles();
   }, []);
+
+  const handleValidate = async (fileId) => {
+    try {
+      const response = await fetch(`http://localhost:3000/delete/${fileId}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete file.");
+      }
+
+      // Remove the deleted file from state
+      setFiles((prevFiles) => prevFiles.filter((file) => file.id !== fileId));
+    } catch (error) {
+      console.error("Error validating file:", error);
+    }
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-white p-8 max-w-3xl mx-auto">
@@ -41,6 +53,12 @@ export default function ReviewerPage() {
               >
                 View in Google Drive
               </a>
+              <button
+                onClick={() => handleValidate(file.id)}
+                className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded"
+              >
+                Validate
+              </button>
             </div>
           </div>
         </div>

@@ -84,3 +84,21 @@ app.get('/auth', async (req, res) => {
 });
 
 app.listen(3000, () => console.log('Server started on http://localhost:3000'));
+
+app.delete('/delete/:fileId', async (req, res) => {
+  try {
+    const authClient = await auth.getClient();
+    const drive = google.drive({ version: 'v3', auth: authClient });
+
+    const fileId = req.params.fileId;
+
+    await drive.files.delete({
+      fileId: fileId,
+    });
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error deleting file:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
