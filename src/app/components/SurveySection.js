@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import axios from "axios";
 
 export default function SurveySection({ sectionData, nextPath }) {
   const router = useRouter();
@@ -36,19 +37,34 @@ export default function SurveySection({ sectionData, nextPath }) {
     }
   };
 
-  const handleLinkChange = (index, value) => {
-    const storedResponses = JSON.parse(localStorage.getItem("responses")) || {};
-    const updatedResponses = {
-      ...storedResponses,
-      [`${sectionData.section}-${index}-file`]: {
-        name: sectionData.questions[index]?.followUp?.title,
-        data: value, // Just the link
-      },
-    };
-
-    localStorage.setItem("responses", JSON.stringify(updatedResponses));
-    setResponses(updatedResponses);
+  const handleFileUpload = async (file, index) => {
+    const formData = new FormData();
+    formData.append("file", file);
+  
+    try {
+      const res = await axios.post("http://localhost:3000/upload", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      
+  
+      const link = res.data.link;
+      const storedResponses = JSON.parse(localStorage.getItem("responses")) || {};
+      const updatedResponses = {
+        ...storedResponses,
+        [`${sectionData.section}-${index}-file`]: {
+          name: sectionData.questions[index]?.followUp?.title,
+          data: link,
+        },
+      };
+  
+      localStorage.setItem("responses", JSON.stringify(updatedResponses));
+      setResponses(updatedResponses);
+    } catch (err) {
+      console.error("File upload failed", err);
+      alert("Upload failed. Please try again.");
+    }
   };
+  
 
   const handlePause = () => {
     const storedResponses = JSON.parse(localStorage.getItem("responses")) || {};
@@ -119,12 +135,20 @@ export default function SurveySection({ sectionData, nextPath }) {
                   <label className="block font-medium">{q.followUp.text}</label>
 
                   {q.followUp.type === "file" ? (
-                    <input
-                      type="text"
-                      placeholder="Paste your Google Drive link here"
-                      onChange={(e) => handleLinkChange(index, e.target.value)}
-                      className="w-full p-2 border rounded"
-                    />
+                    <div>
+                      <input
+                        type="file"
+                        onChange={(e) => handleFileUpload(e.target.files[0], index)}
+                        className="w-full p-2 border rounded"
+                      />
+                      {responses[`${sectionData.section}-${index}-file`] && (
+                        <p className="text-green-600 mt-1 text-sm">
+                          File uploaded: <a href={responses[`${sectionData.section}-${index}-file`]?.data} target="_blank" rel="noreferrer" className="underline">
+                            View file
+                          </a>
+                        </p>
+                      )}
+                    </div>
                   ) : (
                     <input
                       type="text"
