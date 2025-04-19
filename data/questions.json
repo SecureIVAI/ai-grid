@@ -7,99 +7,123 @@
       "tooltipText": "This section aligns with clauses 4.1 to 4.4 of the AI management system standard.",
       "questions": [
         {
-          "text": "Has the organization determined any external issues that are relevant to its purpose and that affect its ability to achieve the intended results of its AI management system?",
+          "questionID": 1,
+          "text": "Has the organization determined any external issues that are relevant to its purpose and that affect its ability to achieve the intended results of its AI management system? If yes, please list them..",
           "type": "yesno",
-          "weight": 10,
+          "dependency": [],
+          "section": "4.1",
           "followUp": {
             "title": "External Issues",
             "type": "file",
-            "text": "Please list or upload supporting documentation."
+            "text": "Please list the external issues."
           }
         },
         {
-          "text": "Has the organization determined any internal issues that are relevant to its purpose and that affect its ability to achieve the intended results of its AI management system?",
+          "questionID": 2,
+          "text": "Has the organization determined any internal issues that are relevant to its purpose and that affect its ability to achieve the intended results of its AI management system? If yes, please list them..",
           "type": "yesno",
-          "weight": 10,
+          "dependency": [],
+          "section": "4.1",
           "followUp": {
             "title": "Internal Issues",
             "type": "file",
-            "text": "Please list or upload supporting documentation."
+            "text": "Please list the internal issues."
           }
         },
         {
+          "questionID": 3,
           "text": "Has the organization determined whether climate change is a relevant issue in the context of its AI management system?",
           "type": "yesno",
-          "weight": 9
+          "dependency": [],
+          "section": "4.1"
         },
         {
-          "text": "Has the organization considered the intended purpose of the AI systems that are developed, provided, or used by the organization?",
+          "questionID": 4,
+          "text": "Has the organization considered the intended purpose of the AI systems that are developed, provided, or used by the organization? If yes, please list them.",
           "type": "yesno",
-          "weight": 9,
+          "dependency": [],
+          "section": "4.1",
           "followUp": {
             "title": "AI System Purposes",
             "type": "file",
-            "text": "Please list or upload supporting documentation."
+            "text": "Please list the intended purposes."
           }
         },
         {
-          "text": "Has the organization determined its role with respect to the AI systems that are developed, provided, or used by the organization?",
+          "questionID": 5,
+          "text": "Has the organization determined its role with respect to the AI systems that are developed, provided, or used by the organization? If yes, please list them.",
           "type": "yesno",
-          "weight": 9,
+          "dependency": [],
+          "section": "4.1",
           "followUp": {
             "title": "AI System Roles",
             "type": "file",
-            "text": "Please list or upload supporting documentation."
+            "text": "Please list the organization's roles."
           }
         },
         {
-          "text": "Has the organization identified the interested parties that are relevant to its AI management system?",
+          "questionID": 6,
+          "text": "Has the organization identified the interested parties that are relevant to its AI management system? If yes, please list the interested parties",
           "type": "yesno",
-          "weight": 10,
+          "dependency": [],
+          "section": "4.2",
           "followUp": {
             "title": "Interested Parties",
             "type": "file",
-            "text": "Please list or upload documentation."
+            "text": "Please list the interested parties."
           }
         },
         {
-          "text": "Has the organization determined the relevant requirements of these interested parties?",
+          "questionID": 7,
+          "text": "Has the organization determined the relevant requirements of these interested parties? If yes, please list the requirements..",
           "type": "yesno",
-          "weight": 9,
+          "dependency": [6],
+          "section": "4.2",
           "followUp": {
             "title": "Stakeholder Requirements",
             "type": "file",
-            "text": "Please list or upload documentation."
+            "text": "Please list the requirements."
           }
         },
         {
-          "text": "Has the organization decided which of these requirements will be addressed through its AI management system?",
+          "questionID": 8,
+          "text": "Has the organization decided which of these requirements will be addressed through its AI management system? If yes, which one?",
           "type": "yesno",
-          "weight": 9,
+          "dependency": [7],
+          "section": "4.2",
           "followUp": {
             "title": "Selected Requirements",
             "type": "file",
-            "text": "Please list or upload documentation."
+            "text": "Please list the requirements to be addressed."
           }
         },
         {
+          "questionID": 9,
           "text": "Has the organization determined the boundaries and applicability of its AI management system in order to establish its scope?",
           "type": "yesno",
-          "weight": 8
+          "dependency": [],
+          "section": "4.3"
         },
         {
-          "text": "When determining the scope of its AI management system, has the organization considered external and internal issues as referred to in previous questions?",
+          "questionID": 10,
+          "text": "When determining the scope of its AI management system, has the organization considered the external and internal issues that are relevant to its purpose and that affect its ability to achieve the intended results(s) of its AI management system, as referred to in Question 1 and 2?",
           "type": "yesno",
-          "weight": 8
+          "dependency": [1, 2],
+          "section": "4.3"
         },
         {
-          "text": "When determining the scope of its AI management system, has the organization considered interested parties, their requirements, and which of these requirements will be addressed?",
+          "questionID": 11,
+          "text": "When determining the scope of its AI management system, has the organization considered the interested parties relevant to the system, their requirements, and which of these requirements will be addressed through the AI management system, as referred to in Question 6, 7, and 8?",
           "type": "yesno",
-          "weight": 8
+          "dependency": [6, 7, 8],
+          "section": "4.3"
         },
         {
-          "text": "Is the scope of the AI management system available as documented information?",
+          "questionID": 12,
+          "text": "Is the scope of the AI management system available as documented information? If yes, please provide all related document(s).",
           "type": "yesno",
-          "weight": 10,
+          "dependency": [],
+          "section": "4.3",
           "followUp": {
             "title": "Scope Document",
             "type": "file",
@@ -107,24 +131,32 @@
           }
         },
         {
-          "text": "Does the organization determine the scope of its AI management system to include activities related to leadership, planning, support, operation, performance, evaluation, improvement, controls, and objectives?",
+          "questionID": 13,
+          "text": "Does the organization determine the scope of its AI management system to include activities related to the requirements on leadership, planning, support, operation, performance, evaluation, improvement, controls, and objectives?",
           "type": "yesno",
-          "weight": 9
+          "dependency": [],
+          "section": "4.3"
         },
         {
+          "questionID": 14,
           "text": "Has the organization established and implemented an AI management system that defines responsibilities, processes, and controls for managing AI-related activities?",
           "type": "yesno",
-          "weight": 10
+          "dependency": [],
+          "section": "4.4"
         },
         {
+          "questionID": 15,
           "text": "Is the above AI management system continually maintained and improved by the organization?",
           "type": "yesno",
-          "weight": 9
+          "dependency": [14],
+          "section": "4.4"
         },
         {
-          "text": "Has the organization documented the above AI management system, including the necessary processes and their interactions?",
+          "questionID": 16,
+          "text": "Has the organization documented the above AI management system, including the necessary processes and their interactions? If yes, please provide all related document(s).",
           "type": "yesno",
-          "weight": 10,
+          "dependency": [14],
+          "section": "4.4",
           "followUp": {
             "title": "AI Management System Documentation",
             "type": "file",
@@ -140,8 +172,10 @@
       "tooltipText": "This section aligns with clauses 5.1 to 5.3 of the AI management system standard.",
       "questions": [
         {
-          "text": "Which of the following actions does top management of the organization take to demonstrate leadership and commitment with respect to the organization AI management system? (Select all that apply)",
+          "questionID": 17,
+          "text": "Which of the following actions does top management of the organization take to demonstrate leadership and commitment with respect to the organization AI management system? (Select all that apply. All listed actions are required)",
           "type": "multipleChoice",
+          "dependency": [14],
           "options": [
             "Ensuring that the AI policy and AI objectives are established and are compatible with the strategic direction of the organization",
             "Ensuring the integration of the AI management system requirements into the organization’s business processes",
@@ -150,9 +184,10 @@
             "Ensuring that the AI management system achieves its intended result(s)",
             "Directing and supporting persons to contribute to the effectiveness of the AI management system",
             "Promoting continual improvement",
-            "Supporting other relevant roles to demonstrate their leadership as it applies to their areas of responsibility"
+            "Supporting other relevant roles to demonstrate their leadership as it applies to their areas of responsibility."
           ],
-          "weight": 10,
+          "note": "All",
+          "section": "5.1",
           "followUp": {
             "title": "Leadership and Commitment Actions",
             "type": "file",
@@ -160,9 +195,11 @@
           }
         },
         {
+          "questionID": 18,
           "text": "Has top management established an AI policy for the organization?",
           "type": "yesno",
-          "weight": 10,
+          "dependency": [],
+          "section": "5.2",
           "followUp": {
             "title": "AI Policy Document",
             "type": "file",
@@ -170,29 +207,39 @@
           }
         },
         {
-          "text": "Is the AI policy appropriate to the purpose of the organization?",
+          "questionID": 19,
+          "text": "Is the AI policy appropriate to the purpose of the organization",
           "type": "yesno",
-          "weight": 10
+          "dependency": [18],
+          "section": "5.2"
         },
         {
+          "questionID": 20,
           "text": "Does the AI policy provide a clear framework for setting AI objectives?",
           "type": "yesno",
-          "weight": 10
+          "dependency": [18],
+          "section": "5.2"
         },
         {
+          "questionID": 21,
           "text": "Does the AI policy include a commitment to meet all applicable requirements?",
           "type": "yesno",
-          "weight": 10
+          "dependency": [18],
+          "section": "5.2"
         },
         {
+          "questionID": 22,
           "text": "Does the AI policy include a commitment to continual improvement of the AI management system?",
           "type": "yesno",
-          "weight": 10
+          "dependency": [18],
+          "section": "5.2"
         },
         {
+          "questionID": 23,
           "text": "Is the AI policy available as documented information? If yes, please provide all related document(s).",
           "type": "yesno",
-          "weight": 10,
+          "dependency": [18],
+          "section": "5.2",
           "followUp": {
             "title": "AI Policy Availability",
             "type": "file",
@@ -200,34 +247,1152 @@
           }
         },
         {
+          "questionID": 24,
           "text": "Does the AI policy refer as relevant to other organizational policies?",
           "type": "yesno",
-          "weight": 10
+          "dependency": [18],
+          "section": "5.2"
         },
         {
+          "questionID": 25,
           "text": "Has the AI policy been communicated clearly within the organization?",
           "type": "yesno",
-          "weight": 10
+          "dependency": [18],
+          "section": "5.2"
         },
         {
+          "questionID": 26,
           "text": "Is the AI policy available to external interested parties, as appropriate?",
           "type": "yesno",
-          "weight": 10
+          "dependency": [18],
+          "section": "5.2"
         },
         {
+          "questionID": 27,
           "text": "Has top management of the organization ensured that the responsibilities and authorities for relevant roles are assigned and communicated within the organization?",
           "type": "yesno",
-          "weight": 10
+          "dependency": [],
+          "section": "5.3"
         },
         {
-          "text": "Has top management assigned the responsibility and authority for ensuring that the organization’s AI management system conforms to the requirements mentioned in the prior survey section about AI management system?",
+          "questionID": 28,
+          "text": "Has top management of  the organization assigned the responsibility and authority for: ensuring that the organization’s AI management system conforms to the requirements mentioned in the prior survey section about AI management system?",
           "type": "yesno",
-          "weight": 10
+          "dependency": [14, 15, 16],
+          "section": "5.3"
         },
         {
-          "text": "Has top management assigned the responsibility and authority for reporting on the performance of the organization’s AI management system to top management?",
+          "questionID": 29,
+          "text": "Has top management of  the organization assigned the responsibility and authority for: reporting on the performance of the organization’s AI management system to top management?",
           "type": "yesno",
-          "weight": 10
+          "dependency": [14],
+          "section": "5.3"
+        }
+      ]
+    },
+    {
+      "section": "planning",
+      "title": "Planning",
+      "objective": "(Section 6.1: Actions to Address Risks and Opportunities)",
+      "tooltipText": "This section aligns with clause 6.1 of the AI management system standard.",
+      "questions": [
+        {
+          "questionID": 30,
+          "text": "When planning for the organization’s AI management system, has the organization considered the internal and external issues as referred to in Question 1 and Question 2?",
+          "type": "yesno",
+          "dependency": [1, 2],
+          "section": "6.1.1"
+        },
+        {
+          "questionID": 31,
+          "text": "When planning for the organization’s AI management system, has the organization considered the interested parties relevant to the system, their requirements, and which of these requirements will be addressed through the AI management system, as referred to in Question 6, 7, and 8?",
+          "type": "yesno",
+          "dependency": [6, 7, 8],
+          "section": "6.1.1"
+        },
+        {
+          "questionID": 32,
+          "text": "Has the organization determined the risks and opportunities that need to be addressed in planning the AI management system?",
+          "type": "yesno",
+          "section": "6.1.1"
+        },
+        {
+          "questionID": 33,
+          "text": "Which of the following are reasons the organization determines risks and opportunities that need to be addressed when planning the AI management system? (Select all that apply. All listed reasons are required)",
+          "type": "multipleChoice",
+          "options": [
+            "To ensure the AI management system achieves intended result(s)",
+            "To prevent or reduce undesired effects",
+            "To achieve continual improvement"
+          ],
+          "note": "All",
+          "section": "6.1.1"
+        },
+        {
+          "questionID": 35,
+          "text": "Has the organization determined the risks and opportunities that need to be addressed to achieve continual improvement for the AI management system? If yes, please provide in detail.",
+          "type": "yesno",
+          "section": "6.1.1"
+        },
+        {
+          "questionID": 34,
+          "text": "Has the organization established and maintained AI risk criteria that support all of the following? (Select all that apply. All listed supports are required)",
+          "type": "multipleChoice",
+          "options": [
+            "Distinguishing acceptable from non-acceptable risks",
+            "Performing AI risk assessments",
+            "Conducting AI risk treatment",
+            "Assessing AI risk impacts"
+          ],
+          "note": "All",
+          "section": "6.1.1"
+        },
+        {
+          "questionID": 36,
+          "text": "Has the organization determined the risks and opportunities according to the domain and application context of an AI system?",
+          "type": "yesno",
+          "section": "6.1.1"
+        },
+        {
+          "questionID": 37,
+          "text": "Has the organization determined the risks and opportunities according to the intended use of the AI system?",
+          "type": "yesno",
+          "section": "6.1.1"
+        },
+        {
+          "questionID": 38,
+          "text": "Has the organization determined the risks and opportunities according to the internal and external issues as referred to in Question 1 and Question 2?",
+          "type": "yesno",
+          "dependency": [1, 2],
+          "section": "6.1.1"
+        },
+        {
+          "questionID": 39,
+          "text": "Has the organization planned any actions to address the mentioned risks and opportunities from Question 32?",
+          "type": "yesno",
+          "dependency": [32],
+          "section": "6.1.1"
+        },
+        {
+          "questionID": 40,
+          "text": "Has the organization planned how to integrate and implement these actions into its AI management system processes?",
+          "type": "yesno",
+          "dependency": [39, 14],
+          "section": "6.1.1"
+        },
+        {
+          "questionID": 41,
+          "text": "Has the organization planned how to evaluate the effectiveness of these actions?",
+          "type": "yesno",
+          "dependency": [40],
+          "section": "6.1.1"
+        },
+        {
+          "questionID": 42,
+          "text": "Has the organization retained documented information on actions taken to identify and address AI risks and AI opportunities? If yes, please provide all related document(s).",
+          "type": "yesno",
+          "dependency": [],
+          "section": "6.1.1",
+          "followUp": {
+            "title": "AI Risk and Opportunity Actions Documentation",
+            "type": "file",
+            "text": "Please upload all related document(s)."
+          }
+        },
+        {
+          "questionID": 43,
+          "text": "(Section 6.2: AI Objectives and Planning to Achieve Them)\n\nHas the organization established AI objectives at relevant functions and levels?",
+          "type": "yesno",
+          "section": "6.2"
+        },
+        {
+          "questionID": 44,
+          "text": "Do the established AI objectives align with the organization’s AI policy as referred to in Question 18?",
+          "type": "yesno",
+          "dependency": [43, 18],
+          "section": "6.2"
+        },
+        {
+          "questionID": 45,
+          "text": "Which of the following requirements do the established AI objectives meet? (Select all that apply. All listed requirement are required)",
+          "type": "multipleChoice",
+          "options": [
+            "Be measurable (if practicable)",
+            "Take into account applicable requirements",
+            "Be monitored",
+            "Be communicated",
+            "Be updated as appropriate"
+          ],
+          "note": "All",
+          "section": "6.2"
+        },
+        {
+          "questionID": 46,
+          "text": "Are the AI objectives available as documented information? If yes, please provide all related document(s).",
+          "type": "yesno",
+          "dependency": [43],
+          "section": "6.2",
+          "followUp": {
+            "title": "AI Objectives Documentation",
+            "type": "file",
+            "text": "Please upload all related document(s)."
+          }
+        },
+        {
+          "questionID": 47,
+          "text": "When planning to achieve AI objectives, has the organization defined tasks, resources, responsibilities, timelines, and the result’s evaluation methods? (Only choose yes when ALL are defined)",
+          "type": "yesno",
+          "dependency": [],
+          "section": "6.2"
+        },
+        {
+          "questionID": 48,
+          "text": "(Section 6.1.2: AI Risk Assessment)\n\nHas the organization defined and established an AI risk assessment process?",
+          "type": "yesno",
+          "section": "6.1.2"
+        },
+        {
+          "questionID": 49,
+          "text": "Is the established AI risk assessment process informed by and aligned with the organization’s AI policy?",
+          "type": "yesno",
+          "dependency": [48, 18],
+          "section": "6.1.2"
+        },
+        {
+          "questionID": 50,
+          "text": "Is the established AI risk assessment process informed by and aligned with the organization’s AI objectives?",
+          "type": "yesno",
+          "dependency": [48, 43],
+          "section": "6.1.2"
+        },
+        {
+          "questionID": 51,
+          "text": "Is the established AI risk assessment process designed to deliver consistent, valid, and comparable results across assessments?",
+          "type": "yesno",
+          "dependency": [48],
+          "section": "6.1.2"
+        },
+        {
+          "questionID": 52,
+          "text": "Does the established AI risk assessment process identify risks that aid or prevent achieving the organization’s AI objectives?",
+          "type": "yesno",
+          "dependency": [48],
+          "section": "6.1.2"
+        },
+        {
+          "questionID": 53,
+          "text": "What does the established AI risk assessment process analyze?  (Select all that apply. All listed actions are required)",
+          "type": "multipleChoice",
+          "options": [
+            "Assess the potential consequences to the organization, individuals and societies that would result if the identified risks were to materialize",
+            "Assess, where applicable, the realistic likelihood of the identified risks",
+            "Determine the levels of risk"
+          ],
+          "note": "All",
+          "section": "6.1.2",
+          "dependency": [48]
+        },
+        {
+          "questionID": 54,
+          "text": "Does the established AI risk assessment process evaluate the AI risks to compare the results of the risk analysis with the risk criteria as referred to in Question 34?",
+          "type": "yesno",
+          "dependency": [48, 34],
+          "section": "6.1.2"
+        },
+        {
+          "questionID": 55,
+          "text": "Does the established AI risk assessment process evaluate the AI risks to prioritize the assessed risks for risk treatment?",
+          "type": "yesno",
+          "dependency": [48],
+          "section": "6.1.2"
+        },
+        {
+          "questionID": 56,
+          "text": "Is the AI risk assessment process available as documented information? If yes, please provide all related document(s)",
+          "type": "yesno",
+          "dependency": [48],
+          "section": "6.1.2",
+          "followUp": {
+            "title": "AI Risk Assessment Process Documentation",
+            "type": "file",
+            "text": "Please upload all related document(s)."
+          }
+        },
+        {
+          "questionID": 57,
+          "text": "(Section 6.1.3: AI Risk Treatment) \nNote: this section requires compliance from the section above (6.1.2)\n\nDoes the organization have a defined AI risk treatment process based on the results of the risk assessment?",
+          "type": "yesno",
+          "dependency": [48],
+          "section": "6.1.3"
+        },
+        {
+          "questionID": 58,
+          "text": "Which of the following processes are included in the organization’s AI risk treatment process? (Select all that apply. All listed processes are required)",
+          "type": "multipleChoice",
+          "options": [
+            "Select appropriate AI risk treatment options",
+            "Determine all controls that are necessary to implement the chosen AI risk treatment options",
+            "Identify if additional controls are necessary in order to implement all risk treatment options",
+            "Produce a statement of applicability that contains the necessary controls and provide justification for inclusion and exclusion of controls. Justification for exclusion can include where the controls are not deemed necessary by the risk assessment and where they are not required by (or are subject to exceptions under) applicable external requirements.",
+            "Formulate an AI risk treatment plan"
+          ],
+          "note": "All",
+          "section": "6.1.3",
+          "dependency": [57],
+          "followUp": {
+            "title": "AI Risk Treatment Process Documentation",
+            "type": "file",
+            "text": "Please upload documentation related to the AI risk treatment process."
+          }
+        },
+        {
+          "questionID": 59,
+          "text": "Has the organization obtained an approval from the designated management for the AI risk treatment plan and for acceptance of the residual AI risks?",
+          "type": "yesno",
+          "dependency": [57],
+          "section": "6.1.3"
+        },
+        {
+          "questionID": 60,
+          "text": "Does the organization ensure that the necessary controls for the AI risk treatment plan and the accepted residual AI risks are aligned to the organization’s AI objective as referred to in Question 43?",
+          "type": "yesno",
+          "dependency": [59, 43],
+          "section": "6.1.3"
+        },
+        {
+          "questionID": 61,
+          "text": "Which of the following does the organization also ensure regarding the necessary controls for AI risk treatment plan and the accepted residual AI risks? (Select all that apply. All listed actions are required)",
+          "type": "multipleChoice",
+          "options": [
+            "Communicated within the organization",
+            "Available to interested parties, as appropriate"
+          ],
+          "note": "All",
+          "section": "6.1.3",
+          "dependency": [59]
+        },
+        {
+          "questionID": 62,
+          "text": "Is the AI risk treatment process plan documented and retained by the organization? If yes, please provide all related document(s)",
+          "type": "yesno",
+          "dependency": [57],
+          "section": "6.1.3",
+          "followUp": {
+            "title": "AI Risk Treatment Plan Documentation",
+            "type": "file",
+            "text": "Please upload all related document(s)."
+          }
+        },
+        {
+          "questionID": 63,
+          "text": "(Section 6.1.4: AI System Impact Assessment) \n\nHas the organization defined a process for assessing the potential consequences for individuals, groups of individuals, or societies resulting from the development, provision, or use of AI systems throughout its life cycle (a.k.a. AI system impact assessment)?",
+          "type": "yesno",
+          "section": "6.1.4"
+        },
+        {
+          "questionID": 64,
+          "text": "Does the AI system impact assessment determine the potential consequences of an AI system's deployment, intended use, and foreseeable misuse on individuals, groups of individuals, or societies?",
+          "type": "yesno",
+          "dependency": [63],
+          "section": "6.1.4"
+        },
+        {
+          "questionID": 65,
+          "text": "Does the AI system impact assessment take into account the specific technical and societal context where the AI system is deployed, as well as applicable jurisdictions?",
+          "type": "yesno",
+          "dependency": [63],
+          "section": "6.1.4"
+        },
+        {
+          "questionID": 66,
+          "text": "Does the organization consider the results of the AI system impact assessment in the risk assessment?",
+          "type": "yesno",
+          "dependency": [63, 48],
+          "section": "6.1.4"
+        },
+        {
+          "questionID": 67,
+          "text": "(Section 6.3: Planning of Changes) \n\nWhen the organization determines the need for changes to the AI management system, are the changes carried out in a planned manner?",
+          "type": "yesno",
+          "section": "6.3"
+        }
+      ]
+    },
+    {
+      "section": "support",
+      "title": "Support",
+      "objective": "Ensure the provision of necessary resources, competence, awareness, communication, and control of documented information for the effective operation of the AI management system.",
+      "tooltipText": "This section aligns with clause 7 (7.1 to 7.5.3) of the AI management system standard.",
+      "questions": [
+        {
+          "questionID": 68,
+          "text": "Has the organization determined and provided the resources needed for the establishment, implementation, maintenance and continual improvement of the AI management system?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "7.1"
+        },
+        {
+          "questionID": 69,
+          "text": "Has the organization determined the necessary competence of the person(s) doing work under its control that affects its AI performance?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "7.2"
+        },
+        {
+          "questionID": 70,
+          "text": "Has the organization ensured that these persons are competent on the basis of appropriate education, training and experience?",
+          "type": "yesno",
+          "dependency": [69],
+          "section": "7.2"
+        },
+        {
+          "questionID": 71,
+          "text": "Does the organization, where applicable, take action to acquire necessary competence on the basis of appropriate education, training or experience?",
+          "type": "yesno",
+          "dependency": [70],
+          "section": "7.2"
+        },
+        {
+          "questionID": 72,
+          "text": "Is the appropriate documented information available as evidence of competence? If yes, please provide evidence.",
+          "type": "yesno",
+          "dependency": [69],
+          "section": "7.2",
+           "followUp": {
+             "title": "Competence Evidence",
+             "type": "file",
+             "text": "Please upload documented information as evidence of competence."
+           }
+        },
+        {
+          "questionID": 73,
+          "text": "Is the person(s) doing work under the organization’s control aware of the AI policy?",
+          "type": "yesno",
+          "dependency": [18],
+          "section": "7.3"
+        },
+        {
+          "questionID": 74,
+          "text": "Is the person(s) doing work under the organization’s control aware of their contribution to the effectiveness of the AI management system, including the benefits of improved AI performance?",
+          "type": "yesno",
+          "dependency": [14],
+          "section": "7.3"
+        },
+        {
+          "questionID": 75,
+          "text": "Is the person(s) doing work under the organization’s control aware of the implications of not conforming with the AI management system requirements?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "7.3"
+        },
+        {
+          "questionID": 76,
+          "text": "Has the organization determined the internal and external communications relevant to the AI management system (including: what it will communicate, when to communicate, with whom to communicate, how to communicate)?",
+          "type": "yesno",
+          "dependency": [14],
+          "section": "7.4"
+        },
+        {
+          "questionID": 77,
+          "text": "Does the organization’s AI management system include all the documented information as required by the relevant standard (e.g., ISO/IEC 42001)?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "7.5.1"
+        },
+        {
+          "questionID": 78,
+          "text": "Does the organization’s AI management system include documented information determined by the organization as being necessary for the effectiveness of the AI management system?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "7.5.1"
+        },
+        {
+          "questionID": 79,
+          "text": "When creating and updating documented information, does the organization ensure the following practices? (Select all that apply)",
+          "type": "multipleChoice",
+          "dependency": [],
+          "section": "7.5.2",
+          "options": [
+            "Identification and description (e.g. a title, date, author or reference number)",
+            "Format (e.g. language, software version, graphics) and media (e.g. paper, electronic)",
+            "Review and approval for suitability and adequacy."
+          ]
+        },
+        {
+          "questionID": 80,
+          "text": "Does the organization have control in place for all the documented information required by the AI management system and this assessment?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "7.5.3"
+        },
+        {
+          "questionID": 81,
+          "text": "Does the mentioned control system ensure the documented information is available and suitable for users, where and when it is needed; and is adequately protected (e.g. from loss of confidentiality, improper use or loss of integrity)?",
+          "type": "yesno",
+          "dependency": [80],
+          "section": "7.5.3"
+        },
+        {
+          "questionID": 82,
+          "text": "Which of the following activities does the organization address for the control of documented information? (Select all that apply)",
+          "type": "multipleChoice",
+          "dependency": [80],
+          "section": "7.5.3",
+          "options": [
+              "Distribution, access, retrieval and use",
+              "Storage and preservation, including preservation of legibility",
+              "Control of changes (e.g. version control)",
+              "Retention and disposition"
+          ]
+        },
+        {
+          "questionID": 83,
+          "text": "Does the organization ensure that documented information of external origin, determined to be necessary for the planning and operation of the AI management system, is identified and controlled appropriately?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "7.5.3"
+        }
+      ]
+    },
+    {
+      "section": "operation",
+      "title": "Operation",
+      "objective": "Ensure that the AI management system processes are implemented and controlled according to plan.",
+      "tooltipText": "This section aligns with clauses 8.1 to 8.4 of the AI management system standard, covering operational planning, AI risk assessment, AI risk treatment, and AI system impact assessment.",
+      "questions": [
+        {
+          "questionID": 84,
+          "text": "Has the organization planned, implemented and controlled the processes needed to meet requirements by establishing criteria for the processes and implementing control of the processes in accordance with the criteria?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "8.1"
+        },
+        {
+          "questionID": 85,
+          "text": "Has the organization implemented the controls that are related to the operation of the AI management system (e.g. AI system development and usage life cycle related controls)?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "8.1"
+        },
+        {
+          "questionID": 86,
+          "text": "Has the organization monitored the effectiveness of these controls and considered corrective actions if the intended results are not achieved?",
+          "type": "yesno",
+          "dependency": [85],
+          "section": "8.1"
+        },
+        {
+          "questionID": 87,
+          "text": "Is the documented information made available to the extent necessary to have confidence that the processes have been carried out as planned?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "8.1"
+        },
+        {
+          "questionID": 88,
+          "text": "Does the organization control planned changes and review the consequences of unintended changes, and if necessary, take action to mitigate any adverse effects?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "8.1"
+        },
+        {
+          "questionID": 89,
+          "text": "Has the organization ensured that externally provided processes, products, or services relevant to the AI management system are controlled?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "8.1"
+        },
+        {
+          "questionID": 90,
+          "text": "Has the organization performed AI risk assessment in accordance with the AI risk assessment at planned intervals or when significant changes are proposed or occur?",
+          "type": "yesno",
+          "dependency": [48, 49, 50, 51, 52, 53, 54, 55, 56],
+          "section": "8.2"
+        },
+        {
+          "questionID": 91,
+          "text": "Does the organization retain documented information of the result of all AI risk assessments?",
+          "type": "yesno",
+          "dependency": [90],
+          "section": "8.2",
+          "followUp": {
+             "title": "AI Risk Assessment Documentation",
+             "type": "file",
+             "text": "Please provide documented information of AI risk assessment results."
+          }
+        },
+        {
+          "questionID": 92,
+          "text": "Has the organization implemented the AI risk treatment plan, as referred to in Question 57, and verified its effectiveness?",
+          "type": "yesno",
+          "dependency": [57, 58, 59, 60, 61, 62],
+          "section": "8.3"
+        },
+        {
+          "questionID": 93,
+          "text": "When risk assessments identify new risks that require treatment, does the organization perform the risk treatment process for these risks?",
+          "type": "yesno",
+          "dependency": [57, 58, 59, 60, 61, 62],
+          "section": "8.3"
+        },
+        {
+          "questionID": 94,
+          "text": "When risk treatment options as defined by the risk treatment plan are not effective, does the organization review and revalidate following the risk treatment process?",
+          "type": "yesno",
+          "dependency": [57, 58, 59, 60, 61, 62],
+          "section": "8.3"
+        },
+        {
+          "questionID": 95,
+          "text": "Does the organization update the risk treatment plan when risk treatment options as defined by the risk treatment plan are not effective?",
+          "type": "yesno",
+          "dependency": [94],
+          "section": "8.3"
+        },
+        {
+          "questionID": 96,
+          "text": "Does the organization retain documented information of the result of all AI risk treatment?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "8.3",
+           "followUp": {
+             "title": "AI Risk Treatment Documentation",
+             "type": "file",
+             "text": "Please provide documented information of AI risk treatment results."
+          }
+        },
+        {
+          "questionID": 97,
+          "text": "Does the organization perform AI system impact assessment according to the AI system impact assessment at planned intervals or when significant changes are proposed to occur?",
+          "type": "yesno",
+          "dependency": [63, 64, 65, 66],
+          "section": "8.4"
+        },
+        {
+          "questionID": 98,
+          "text": "Does the organization retain, for a defined period of time, documented information of the results of all AI system impact assessments?",
+          "type": "yesno",
+          "dependency": [97],
+          "section": "8.4",
+           "followUp": {
+             "title": "AI System Impact Assessment Documentation",
+             "type": "file",
+             "text": "Please provide documented information of AI system impact assessment results."
+          }
+        }
+      ]
+    },
+    {
+      "section": "performance",
+      "title": "Performance Evaluation",
+      "objective": "Evaluate the performance and effectiveness of the AI management system through monitoring, measurement, analysis, evaluation, internal audit, and management review.",
+      "tooltipText": "This section aligns with clauses 9.1 to 9.3.3 of the AI management system standard.",
+      "questions": [
+        {
+          "questionID": 99,
+          "text": "Which of the following does the organization determine and ensure as part of monitoring, measurement, analysis, and evaluation of all AI-related systems within the organization? (Select all that apply. All listed options are required)",
+          "type": "multipleChoice",
+          "options": [
+            "What needs to be monitored and measured",
+            "The methods for monitoring, measurement, analysis and evaluation, as applicable, to ensure valid results",
+            "When the monitoring and measuring shall be performed",
+            "When the results from monitoring and measurement shall be analysed and evaluated"
+          ],
+          "dependency": [],
+          "section": "9.1"
+        },
+        {
+          "questionID": 100,
+          "text": "Are the results of all performance evaluations available as documented information?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "9.1",
+          "followUp": {
+             "title": "Performance Evaluation Documentation",
+             "type": "file",
+             "text": "Please provide documented information of performance evaluation results."
+          }
+        },
+        {
+          "questionID": 101,
+          "text": "Has the organization evaluated the performance and effectiveness of the AI management system?",
+          "type": "yesno",
+          "dependency": [14],
+          "section": "9.1",
+          "followUp": {
+             "title": "AI Management System Performance Evaluation",
+             "type": "file",
+             "text": "Please provide evidence of the evaluation of the AI management system's performance and effectiveness."
+          }
+        },
+        {
+          "questionID": 102,
+          "text": "Does the organization conduct internal audits at planned intervals to assess the AI management system?",
+          "type": "yesno",
+          "dependency": [14],
+          "section": "9.2.1"
+        },
+        {
+          "questionID": 103,
+          "text": "What does the organization aim to determine through internal audits? (Select all that apply. All listed options are required)",
+          "type": "multipleChoice",
+          "options": [
+            "Conformance to the organization’s own requirements for its AI management system",
+            "Conformance to the all the requirements related to AI management system",
+            "Effective implementation and maintenance of the AI management system"
+          ],
+          "dependency": [],
+          "section": "9.2.1"
+        },
+        {
+          "questionID": 104,
+          "text": "Has the organization planned, established, implemented and maintained (an) audit programme(s), including the frequency, methods, responsibilities, planning requirements and reporting?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "9.2.2"
+        },
+        {
+          "questionID": 105,
+          "text": "When establishing the internal audit programme(s), does the organization consider the importance of the processes and results of previous audits?",
+          "type": "yesno",
+          "dependency": [104],
+          "section": "9.2.2"
+        },
+        {
+          "questionID": 106,
+          "text": "Does the organization define the objectives, criteria, and scope for each audit?",
+          "type": "yesno",
+          "dependency": [104],
+          "section": "9.2.2"
+        },
+        {
+          "questionID": 107,
+          "text": "Does the organization select auditors and conduct audits to ensure objectivity and the impartiality of the audit process?",
+          "type": "yesno",
+          "dependency": [104],
+          "section": "9.2.2"
+        },
+        {
+          "questionID": 108,
+          "text": "Does the organization ensure that the results of audits are reported to relevant managers?",
+          "type": "yesno",
+          "dependency": [104],
+          "section": "9.2.2"
+        },
+        {
+          "questionID": 109,
+          "text": "Is the implementation of the audit programme(s) available as documented information?",
+          "type": "yesno",
+          "dependency": [104],
+          "section": "9.2.2",
+           "followUp": {
+             "title": "Audit Programme Documentation",
+             "type": "file",
+             "text": "Please provide documented information of the audit programme(s) implementation."
+          }
+        },
+        {
+          "questionID": 110,
+          "text": "Are the results of all audits available as documented information?",
+          "type": "yesno",
+          "dependency": [104],
+          "section": "9.2.2",
+           "followUp": {
+             "title": "Audit Results Documentation",
+             "type": "file",
+             "text": "Please provide documented information of audit results."
+          }
+        },
+        {
+          "questionID": 111,
+          "text": "Does top management conduct reviews of the AI management system at planned intervals to ensure its continuing suitability, adequacy, and effectiveness?",
+          "type": "yesno",
+          "dependency": [14],
+          "section": "9.3.1"
+        },
+         {
+          "questionID": 112,
+          "text": "Does the organization conduct management reviews of the AI management system at planned intervals?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "9.3.2"
+        },
+        {
+          "questionID": 113,
+          "text": "Which of the following are included in the management review of the AI management system? (Select all that apply. All listed options are required)",
+          "type": "multipleChoice",
+          "options": [
+            "Status of actions from previous management reviews",
+            "Changes in external and internal issues relevant to the AI management system",
+            "Changes in needs and expectations of interested parties",
+            "Information on AI management system performance (including: nonconformities and corrective actions, monitoring and measurement results, audit results)",
+            "Opportunities for continual improvement"
+          ],
+          "dependency": [112],
+          "section": "9.3.2"
+        },
+        {
+          "questionID": 114,
+          "text": "Do the results of the management review include decisions related to continual improvement opportunities and any need for changes to the AI management system?",
+          "type": "yesno",
+          "dependency": [112],
+          "section": "9.3.3"
+        },
+        {
+          "questionID": 115,
+          "text": "Are the results of all the management reviews available as documented information?",
+          "type": "yesno",
+          "dependency": [112],
+          "section": "9.3.3",
+           "followUp": {
+             "title": "Management Review Documentation",
+             "type": "file",
+             "text": "Please provide documented information of management review results."
+          }
+        }
+      ]
+    },
+    {
+      "section": "improvement",
+      "title": "Improvement",
+      "objective": "Ensure the continual improvement of the AI management system, addressing nonconformities and taking corrective actions.",
+      "tooltipText": "This section aligns with clauses 10.1 and 10.2 of the AI management system standard.",
+      "questions": [
+        {
+          "questionID": 116,
+          "text": "Does the organization continually improve the suitability, adequacy, and effectiveness of the AI management system?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "10.1"
+        },
+        {
+          "questionID": 117,
+          "text": "When a nonconformity occurs, which of the following actions does the organization perform? (Select all that apply. All listed actions are required)",
+          "type": "multipleChoice",
+          "options": [
+            "React to the nonconformity by taking action to control and correct it; and by dealing with consequences",
+            "Evaluate the need for action to eliminate the cause(s) by reviewing the nonconformity, determining the causes, and checking if similar nonconformities exists or may occur",
+            "Implement any necessary actions",
+            "Review the effectiveness of corrective actions",
+            "Make changes to the AI management system if necessary"
+          ],
+          "dependency": [],
+          "section": "10.2"
+        },
+        {
+          "questionID": 118,
+          "text": "Are the corrective actions taken by the organization appropriate to the effects of the nonconformities encountered?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "10.2"
+        },
+        {
+          "questionID": 119,
+          "text": "Is documented information available as evidence of the nature of nonconformities and any subsequent actions taken, as well as the results of any corrective actions?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "10.2",
+           "followUp": {
+             "title": "Nonconformity and Corrective Action Documentation",
+             "type": "file",
+             "text": "Please provide documented information regarding nonconformities, actions taken, and results."
+          }
+        }
+      ]
+    },
+    {
+      "section": "additional",
+      "title": "Additional Information (Annex A)",
+      "objective": "Address supplementary controls and guidance from Annex A of the AI management system standard.",
+      "tooltipText": "This section covers various controls and considerations from Annex A (A.2 to A.9) of the AI management system standard that are not explicitly covered in other clauses.",
+      "questions": [
+        {
+          "questionID": 120,
+          "text": "Is the organization's AI policy reviewed at planned intervals or additionally as needed to ensure its continuing suitability, adequacy and effectiveness?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.2.4"
+        },
+        {
+          "questionID": 121,
+          "text": "Are roles and responsibilities for AI defined and allocated according to the needs of the organization?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.3.2"
+        },
+        {
+          "questionID": 122,
+          "text": "Does the organization have a defined process to report concerns about the organization’s role with respect to an AI system throughout its life cycle?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.3.3"
+        },
+        {
+          "questionID": 123,
+          "text": "Has the organization identified and documented relevant resources required for the activities at given AI system life cycle stages and other AI-related activities relevant for the organization?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.4.2"
+        },
+        {
+          "questionID": 124,
+          "text": "Has the organization, as part of the resources identification, documented the information about the data resources utilized for the AI system?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.4.3"
+        },
+        {
+          "questionID": 125,
+          "text": "Has the organization, as part of the resource identification, documented the information about the tooling resources utilized for the AI system?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.4.4"
+        },
+        {
+          "questionID": 126,
+          "text": "Has the organization, as part of the resource identification, documented the information about the system and computing resources utilized for the AI system?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.4.5"
+        },
+        {
+          "questionID": 127,
+          "text": "Has the organization, as part of the resource identification, documented the information about the human resources and their competences utilized for the development, deployment, operation, change management, maintenance, transfer and decommissioning, as well as verification and integration of the AI system?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.4.6"
+        },
+        {
+          "questionID": 128,
+          "text": "Has the organization identified and documented objectives to guide the responsible development AI systems, and take those objectives into account and integrate measures to achieve them in the development life cycle?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.6.1.2",
+          "followUp": {
+             "title": "Responsible Development Objectives Documentation",
+             "type": "file",
+             "text": "Please provide documented objectives for responsible AI development."
+          }
+        },
+        {
+          "questionID": 129,
+          "text": "Has the organization defined and documented the specific processes for the responsible design and development of the AI system?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.6.1.3",
+          "followUp": {
+             "title": "Design and Development Process Documentation",
+             "type": "file",
+             "text": "Please provide documented processes for responsible AI design and development."
+          }
+        },
+        {
+          "questionID": 130,
+          "text": "Has the organization specified and documented the requirement for new AI systems or material enhancements to existing systems?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.6.2.2",
+          "followUp": {
+             "title": "AI System Requirements Documentation",
+             "type": "file",
+             "text": "Please provide documented requirements for AI systems."
+          }
+        },
+        {
+          "questionID": 131,
+          "text": "Has the organization documented the AI system design and development based on the organizational objectives, documented requirements and specification criteria?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.6.2.3",
+          "followUp": {
+             "title": "AI System Design/Development Documentation",
+             "type": "file",
+             "text": "Please provide documented AI system design and development based on objectives, requirements, and criteria."
+          }
+        },
+        {
+          "questionID": 132,
+          "text": "Has the organization defined and documented verification and validation measures for the AI system and specified criteria for their use?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.6.2.4",
+          "followUp": {
+             "title": "Verification and Validation Documentation",
+             "type": "file",
+             "text": "Please provide documented verification and validation measures and criteria."
+          }
+        },
+        {
+          "questionID": 133,
+          "text": "Has the organization documented a deployment plan and ensured that appropriate requirements are met prior to deployment?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.6.2.5",
+          "followUp": {
+             "title": "Deployment Plan Documentation",
+             "type": "file",
+             "text": "Please provide the documented deployment plan."
+          }
+        },
+        {
+          "questionID": 134,
+          "text": "Has the organization defined and documented the necessary elements for the ongoing operation of the AI system (at minimum, this should include system and performance monitoring, repairs updates and support)",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.6.2.6",
+          "followUp": {
+             "title": "Ongoing Operation Elements Documentation",
+             "type": "file",
+             "text": "Please provide documentation for ongoing AI system operation elements."
+          }
+        },
+        {
+          "questionID": 135,
+          "text": "Has the organization determined what AI system technical documentation is needed for each relevant category of interested parties such as users, partners, supervisory authorities, and provide the technical documentation to them in the appropriate form?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.6.2.7"
+        },
+        {
+          "questionID": 136,
+          "text": "Has the organization determined at which phases of the AI system life cycle that the record keeping of event logs should be enabled, but at the minimum what the AI system is in use?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.6.2.8"
+        },
+        {
+          "questionID": 137,
+          "text": "Has the organization defined, documented, and implemented data management processes related to the development of AI systems?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.7.2",
+          "followUp": {
+             "title": "Data Management Processes Documentation",
+             "type": "file",
+             "text": "Please provide documented data management processes for AI system development."
+          }
+        },
+        {
+          "questionID": 138,
+          "text": "Has the organization determined and documented details about the acquisition and selection of the data used in AI systems?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.7.3",
+          "followUp": {
+             "title": "Data Acquisition and Selection Documentation",
+             "type": "file",
+             "text": "Please provide documented details about data acquisition and selection."
+          }
+        },
+        {
+          "questionID": 139,
+          "text": "Has the organization defined and documented requirements for data quality and ensured that data used to develop and operate the AI system meet those requirements?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.7.4",
+          "followUp": {
+             "title": "Data Quality Requirements Documentation",
+             "type": "file",
+             "text": "Please provide documented data quality requirements."
+          }
+        },
+        {
+          "questionID": 140,
+          "text": "Has the organization defined and documented a process for recording the provenance of data used in its AI systems over the life cycles of the data and the AI system?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.7.5",
+          "followUp": {
+             "title": "Data Provenance Process Documentation",
+             "type": "file",
+             "text": "Please provide documented process for recording data provenance."
+          }
+        },
+        {
+          "questionID": 141,
+          "text": "Has the organization defined and documented its criteria for selecting data preparations and the data preparation method to be used?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.7.6",
+          "followUp": {
+             "title": "Data Preparation Criteria Documentation",
+             "type": "file",
+             "text": "Please provide documented criteria for selecting data preparation methods."
+          }
+        },
+        {
+          "questionID": 142,
+          "text": "Does the organization provide the necessary information to users of the AI system?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.8.2"
+        },
+        {
+          "questionID": 143,
+          "text": "Does the organization provide capabilities for interested parties to report adverse impacts of the AI system?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.8.3",
+          "followUp": {
+             "title": "Adverse Impact Reporting Capability Documentation",
+             "type": "file",
+             "text": "Please provide documentation for adverse impact reporting capabilities."
+          }
+        },
+        {
+          "questionID": 144,
+          "text": "Has the organization determined and documented a plan for communicating incidents to users of the AI system?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.8.4",
+          "followUp": {
+             "title": "Incident Communication Plan Documentation",
+             "type": "file",
+             "text": "Please provide the documented plan for communicating incidents to users."
+          }
+        },
+        {
+          "questionID": 145,
+          "text": "Has the organization determined and documented their obligations to reporting information about the AI system to interested parties?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.8.5",
+          "followUp": {
+             "title": "Reporting Obligations Documentation",
+             "type": "file",
+             "text": "Please provide documented reporting obligations to interested parties."
+          }
+        },
+        {
+          "questionID": 146,
+          "text": "Has the organization defined and documented the processes for the responsible use of AI systems?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.9.2",
+          "followUp": {
+             "title": "Responsible Use Processes Documentation",
+             "type": "file",
+             "text": "Please provide documented processes for the responsible use of AI systems."
+          }
+        },
+        {
+          "questionID": 147,
+          "text": "Has the organization identified and documented objectives to guide the responsible use of AI systems?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.9.3",
+          "followUp": {
+             "title": "Responsible Use Objectives Documentation",
+             "type": "file",
+             "text": "Please provide documented objectives for responsible AI use."
+          }
+        },
+        {
+          "questionID": 148,
+          "text": "Can the organization ensure that the AI system is used according to the intended uses of the AI system and its accompanying documentation?",
+          "type": "yesno",
+          "dependency": [],
+          "section": "A.9.4"
         }
       ]
     }
