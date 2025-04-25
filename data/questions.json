@@ -12,6 +12,7 @@
           "type": "yesno",
           "dependency": [],
           "section": "4.1",
+          "weight": "10",
           "followUp": {
             "title": "External Issues",
             "type": "file",
@@ -494,9 +495,9 @@
         },
         {
           "questionID": 54,
-          "text": "Does the established AI risk assessment process evaluate the AI risks to compare the results of the risk analysis with the risk criteria as referred to in Question 34?",
+          "text": "Does the established AI risk assessment process evaluate the AI risks to compare the results of the risk analysis with the risk criteria?",
           "type": "yesno",
-          "dependency": [48, 34],
+          "dependency": [48],
           "section": "6.1.2"
         },
         {
@@ -806,7 +807,7 @@
           "questionID": 90,
           "text": "Has the organization performed AI risk assessment in accordance with the AI risk assessment at planned intervals or when significant changes are proposed or occur?",
           "type": "yesno",
-          "dependency": [48, 49, 50, 51, 52, 53, 54, 55, 56],
+          "dependency": [48, 49, 50, 51, 52, 54, 55, 56],
           "section": "8.2"
         },
         {
@@ -825,21 +826,21 @@
           "questionID": 92,
           "text": "Has the organization implemented the AI risk treatment plan, as referred to in Question 57, and verified its effectiveness?",
           "type": "yesno",
-          "dependency": [57, 58, 59, 60, 61, 62],
+          "dependency": [57, 59, 60, 62],
           "section": "8.3"
         },
         {
           "questionID": 93,
           "text": "When risk assessments identify new risks that require treatment, does the organization perform the risk treatment process for these risks?",
           "type": "yesno",
-          "dependency": [57, 58, 59, 60, 61, 62],
+          "dependency": [57, 59, 60, 62],
           "section": "8.3"
         },
         {
           "questionID": 94,
           "text": "When risk treatment options as defined by the risk treatment plan are not effective, does the organization review and revalidate following the risk treatment process?",
           "type": "yesno",
-          "dependency": [57, 58, 59, 60, 61, 62],
+          "dependency": [57, 59, 60, 62],
           "section": "8.3"
         },
         {
