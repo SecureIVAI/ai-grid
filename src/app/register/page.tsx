@@ -12,17 +12,24 @@ export default function Register() {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
-
+  
+    const form = e.currentTarget;
+  
+    // Let the browser show native validation messages
+    if (!form.checkValidity()) {
+      form.reportValidity(); // Triggers browser's tooltip/messages
+      return;
+    }
+  
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
     }
-
+  
     try {
-      // send registration request to the server
       const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: {
@@ -30,17 +37,18 @@ export default function Register() {
         },
         body: JSON.stringify({ name, email, password }),
       });
-
+  
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Registration failed");
+        throw new Error(errorData.error || "Registration failed");
       }
-
+  
       router.push("/signin?status=success");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed");
     }
   };
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -79,6 +87,7 @@ export default function Register() {
               type="email"
               id="email"
               value={email}
+              title="Please enter a valid email address (name@mail.com)"
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               required
@@ -98,7 +107,10 @@ export default function Register() {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               required
-              minLength={6}
+              minLength={8}
+              maxLength={30}
+              pattern="^(?=.*[A-Z])(?=.*\d).+$"
+              title="Password must contain at least one uppercase letter and one number"
             />
           </div>
           <div>

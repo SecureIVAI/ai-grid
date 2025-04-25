@@ -10,33 +10,54 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-start pt-24 min-h-screen bg-gray-50 text-center p-4">
-      <h1 className="text-5xl font-bold text-gray-900 mb-6">
-        AI-GRID
-      </h1>
+      <h1 className="text-5xl font-bold text-gray-900 mb-6">AI-GRID</h1>
       <p className="text-xl text-gray-700 max-w-2xl mb-8">
-        AI-GRID helps organizations of all sizes achieve <strong>ISO 42001 compliance</strong>.  
+        AI-GRID helps organizations of all sizes achieve <strong>ISO 42001 compliance</strong>.
         Our survey adapts to your responses, guiding you through a tailored compliance process.
       </p>
+
       {session ? (
-        <div className="flex  gap-4">
-        <button
-          onClick={() => router.push("/survey/context")}
-          className=" px-8 py-3 text-lg font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500">
-          Resume
-        </button>
+        session.user.role === "admin" ? (
           <button
-          onClick={() => {localStorage.removeItem("responses"); router.push("/survey/context")}}
+            onClick={() => router.push("/admin")}
+            className="px-8 py-3 text-lg font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            Go to Admin Dashboard
+          </button>
+        ) : session.user.role === "reviewer" ? (
+          <button
+            onClick={() => router.push("/reviewer")}
+            className="px-8 py-3 text-lg font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+            Go to Reviewer Page
+          </button>
+        ) : (
+          <div className="flex gap-4">
+            <button
+              onClick={() => router.push("/survey/context")}
+              className="px-8 py-3 text-lg font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              Resume
+            </button>
+            <button
+              onClick={() => {
+                localStorage.removeItem("responses");
+                router.push("/survey/context");
+              }}
+              className="px-8 py-3 text-lg font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              Start Survey
+            </button>
+          </div>
+        )
+      ) : (
+        <button
+          onClick={() => router.push("/signin")}
           className="px-8 py-3 text-lg font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
         >
-          Start Survey
+          Sign in to complete evaluation
         </button>
-    
-      </div>)
-      :
-      (<button
-        onClick={() => router.push("/signin")}
-        className="px-8 py-3 text-lg font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        >Sign in to complete evaluation</button>)}
+      )}
     </div>
   );
 }
