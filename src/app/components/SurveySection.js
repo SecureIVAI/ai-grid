@@ -361,26 +361,27 @@ export default function SurveySection({ sectionData, nextPath }) {
                     ))}
                   </select>
                 ) : q.type === "multipleChoice" ? (
-                   <div className="flex flex-col">
-                     {q.options.map((option, idx) => (
-                       <div key={idx} className="flex items-center">
-                         <input
-                           type="checkbox"
-                           id={`checkbox-${questionKey}-${idx}`} // Unique ID
-                           value={option} // The value is the option text itself
-                           checked={responses[questionKey]?.includes(option)} // Check if option is in the array
-                           // Pass the whole question object and the specific option value
-                           onChange={() => handleChange(q, option)}
-                           className="mr-2"
-                           // disabled={disabled}
-                         />
-                         <label htmlFor={`checkbox-${questionKey}-${idx}`}>
-                           {option}
-                         </label>
-                       </div>
-                     ))}
-                   </div>
-                ) : ( // Default case (e.g., text input)
+                  <div className="flex flex-col">
+                    {q.options.map((option, idx) => (
+                      <div key={idx} className="flex items-center">
+                        <input
+                          type="checkbox"
+                          id={`checkbox-${questionKey}-${idx}`} // Unique ID
+                          value={option} // The value is the option text itself
+                          // FIX IS HERE: Ensure responses[questionKey] is an array before using includes
+                          checked={Array.isArray(responses[questionKey]) && responses[questionKey].includes(option)}
+                          // Pass the whole question object and the specific option value
+                          onChange={() => handleChange(q, option)}
+                          className="mr-2"
+                          // disabled={disabled}
+                        />
+                        <label htmlFor={`checkbox-${questionKey}-${idx}`}>
+                          {option}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+               ) : ( // Default case (e.g., text input)
                   <input
                     type="text"
                     value={responses[questionKey] || ""}
