@@ -45,3 +45,19 @@ model Session {
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+model SurveyProgress {
+  id        Int      @id @default(autoincrement())
+  responses String
+  timestamp DateTime
+  createdAt DateTime @default(now())
+}
+
+model SurveyHistory {
+  id        Int      @id @default(autoincrement())
+  responses String   // Store responses as JSON
+  timestamp DateTime
+  createdAt DateTime @default(now())
+  status    String   // e.g., "In Progress", "Completed"
+  lastSection String? // Track the last section the user was at in the survey
+}

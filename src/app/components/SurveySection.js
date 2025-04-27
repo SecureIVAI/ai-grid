@@ -187,16 +187,52 @@ export default function SurveySection({ sectionData, nextPath }) {
   };
 
 
-  // Save ALL responses (which are now keyed by questionID or fallback key) to localStorage
   const saveProgress = () => {
-    // No need to merge here if 'responses' state already holds everything relevant
+    if (!responses || Object.keys(responses).length === 0) {
+      alert("No progress to save!");
+      return;
+    }
     localStorage.setItem("responses", JSON.stringify(responses));
   };
-
-  const handlePause = () => {
-    saveProgress();
-    alert("Survey paused and progress saved!");
+  
+  const saveToServer = async (responses) => {
+    const currentTime = new Date().toISOString();
+    const id = parseInt(localStorage.getItem("surveyId"), 10); 
+  
+    try {
+      const response = await fetch("/api/history/saveProgress", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id,                  
+          responses,
+          lastSection: sectionData.section,
+          timestamp: currentTime,
+        }),
+      });
+    
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error saving progress to server:", errorData.error);
+        alert("Failed to save progress to the server.");
+        return false;
+      }
+  
+      alert(`Survey paused and progress saved at: ${new Date().toLocaleString()}`);
+      return true;
+    } catch (error) {
+      console.error("Error saving progress to server:", error);
+      alert("Failed to save progress to the server.");
+      return false;
+    }
   };
+  
+  
+  const handlePause = async () => {
+    saveProgress(); // Save locally
+    await saveToServer(responses); // Save to server
+  };
+  
 
   const handleNext = () => {
     saveProgress();
