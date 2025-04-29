@@ -11,7 +11,7 @@ export default function SurveyHistoryPage() {
   useEffect(() => {
     const fetchSurveys = async () => {
       try {
-        const response = await fetch("/api/history/getSurveyHistory");
+        const response = await fetch("/api/auth/history/getSurveyHistory");
         if (!response.ok) throw new Error("Failed to fetch survey history.");
 
         const data = await response.json();
@@ -28,7 +28,7 @@ export default function SurveyHistoryPage() {
 
   const handleContinue = async (id) => {
     try {
-      const response = await fetch(`/api/history/continueSurvey?id=${id}`);
+      const response = await fetch(`/api/auth/history/continueSurvey?id=${id}`);
       const data = await response.json();
 
       if (!response.ok) throw new Error("Failed to continue survey.");
@@ -45,7 +45,7 @@ export default function SurveyHistoryPage() {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch("/api/history/deleteSurveyHistory", {
+      const response = await fetch("/api/auth/history/deleteSurveyHistory", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

@@ -30,7 +30,7 @@ export default function Home() {
               localStorage.removeItem("surveyId");
 
               try {
-                const res = await fetch("/api/history/startSurvey", {
+                const res = await fetch("/api/auth/history/startSurvey", {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify({

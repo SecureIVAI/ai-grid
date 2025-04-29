@@ -4,11 +4,29 @@ import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function SurveySection({ sectionData, nextPath, prevPath }) {
   
   const router = useRouter();
   const pathname = usePathname();
+
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push('/signin');
+    }
+  }, [status, router]);
+
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  if (!session) {
+    return null; // Or show nothing while redirecting
+  }
+
 
 
   const [responses, setResponses] = useState({});
@@ -20,7 +38,7 @@ export default function SurveySection({ sectionData, nextPath, prevPath }) {
     if (id) {
       const fetchSurvey = async () => {
         try {
-          const response = await fetch(`/api/history/continueSurvey?id=${id}`);
+          const response = await fetch(`/api/auth/history/continueSurvey?id=${id}`);
           if (!response.ok) throw new Error("Failed to fetch survey.");
 
           const data = await response.json();
@@ -86,22 +104,23 @@ export default function SurveySection({ sectionData, nextPath, prevPath }) {
 
 
   // Enabled state calculation now uses the potentially global 'responses' state
-  const [enabledQuestions, setEnabledQuestions] = useState(() => {
-    const initialEnabled = {};
-    // Need to pass the initially loaded 'responses' to isDependencyMet
-    const initialResponses = JSON.parse(localStorage.getItem("responses")) || {};
-     sectionData.questions.forEach((q, index) => { // Added index for fallback key
-        const key = q.questionID || `noID-${sectionData.section}-${index}`; // Use index in fallback
-        if (q.questionID) {
-            // Pass the full set of initial responses for checking
-            initialEnabled[key] = isDependencyMet(q, initialResponses);
-        } else {
-             // If no questionID, assume enabled unless explicitly dependent within the same section (edge case)
-             initialEnabled[key] = !q.dependency || q.dependency.length === 0;
-        }
+
+  const [enabledQuestions, setEnabledQuestions] = useState({});
+  useEffect(() => {
+    const updatedEnabled = {};
+  
+    sectionData.questions.forEach((q, index) => {
+      const key = q.questionID || `noID-${sectionData.section}-${index}`;
+      if (q.questionID) {
+        updatedEnabled[key] = isDependencyMet(q, responses);
+      } else {
+        updatedEnabled[key] = !q.dependency || q.dependency.length === 0;
+      }
     });
-    return initialEnabled;
-  });
+  
+    setEnabledQuestions(updatedEnabled);
+  }, [responses, sectionData]);
+  
   
 
 
@@ -225,7 +244,7 @@ export default function SurveySection({ sectionData, nextPath, prevPath }) {
   const saveToServer = async (responses, id, status = 'In Progress') => {
     const currentTime = new Date().toISOString();
     try {
-      const response = await fetch("/api/history/saveProgress", {
+      const response = await fetch("/api/auth/history/saveProgress", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
