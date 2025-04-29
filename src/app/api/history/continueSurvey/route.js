@@ -18,7 +18,7 @@ export async function GET(req) {
       return new Response(JSON.stringify({ error: "Survey not found" }), { status: 404 });
     }
 
-    // ✅ No need to parse responses for lastSection
+    
     return new Response(
       JSON.stringify({
         ...survey,

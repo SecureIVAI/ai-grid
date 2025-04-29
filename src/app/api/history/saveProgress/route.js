@@ -1,30 +1,26 @@
-import prisma from "@/lib/prisma";
-
 export async function POST(req) {
   try {
     const body = await req.json();
-    const { responses, timestamp, id, lastSection } = body;
+    const { responses, timestamp, id, lastSection, status } = body;
 
     if (id) {
-      // Attempt to update the existing survey
       const updatedSurvey = await prisma.surveyHistory.update({
-        where: { id },
+        where: { id: parseInt(id, 10) },
         data: {
           responses: JSON.stringify(responses),
           timestamp: new Date(timestamp),
           lastSection,
-          status: "In Progress",
+          status: status,
         },
       });
-  
+
       return new Response(JSON.stringify(updatedSurvey), { status: 200 });
     } else {
-      // Create new survey record
       const newSurvey = await prisma.surveyHistory.create({
         data: {
           responses: JSON.stringify(responses),
           timestamp: new Date(timestamp),
-          status: "In Progress",
+          status: status || "In Progress",
           lastSection: lastSection || null,
         },
       });

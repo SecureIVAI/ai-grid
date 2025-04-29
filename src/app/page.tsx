@@ -42,7 +42,7 @@ export default function Home() {
                 if (!res.ok || !data?.id) throw new Error("Survey creation failed");
 
                 localStorage.setItem("surveyId", data.id);              
-                router.push("/survey/context");
+                router.push(`/survey/context?id=${data.id}`);
               } catch (error) {
                 console.error("Failed to start new survey:", error);
                 alert("Could not start new survey. Please try again.");
