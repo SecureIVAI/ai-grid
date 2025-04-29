@@ -20,17 +20,26 @@ export default function DynamicSurveyPage() {
     (q) => q.section.toLowerCase() === formattedSection.toLowerCase()
   );
 
-  // Define the index and next path based on the current section
+  // Define the index and paths based on the current section
   const currentIndex = questions.findIndex(
     (q) => q.section.toLowerCase() === formattedSection.toLowerCase()
   );
 
+  // Next path calculation (existing)
   const nextPath =
     currentIndex + 1 < questions.length
       ? `/survey/${questions[currentIndex + 1].section
           .toLowerCase()
           .replace(/\s+/g, "-")}`
-      : "../../results"; // or some final page
+      : "../../results";
+
+  // New: Previous path calculation
+  const prevPath =
+    currentIndex > 0
+      ? `/survey/${questions[currentIndex - 1].section
+          .toLowerCase()
+          .replace(/\s+/g, "-")}`
+      : "/survey/context"; // or wherever your survey starts
 
   if (!sectionData) {
     return (
@@ -42,7 +51,11 @@ export default function DynamicSurveyPage() {
 
   return (
     <div className="flex flex-col items-center justify-start pt-24 min-h-screen bg-gray-50 p-4">
-      <SurveySection sectionData={sectionData} nextPath={nextPath} />
+      <SurveySection 
+        sectionData={sectionData} 
+        nextPath={nextPath}
+        prevPath={prevPath} // Pass the prevPath as a new prop
+      />
     </div>
   );
 }
