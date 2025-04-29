@@ -3,35 +3,79 @@
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
 
-export default function SurveySection({ sectionData, nextPath }) {
+export default function SurveySection({ sectionData, nextPath, prevPath }) {
+  
   const router = useRouter();
   const pathname = usePathname();
 
-  // Load ALL responses from localStorage initially.
-  // We use questionID as the primary key now.
-  const [responses, setResponses] = useState(() => {
-    const storedResponses = JSON.parse(localStorage.getItem("responses")) || {};
-    const defaultValues = {};
+  const { data: session, status } = useSession();
 
- 
-    // Merge defaults for the current section with ALL previously stored responses
-    return { ...storedResponses, ...defaultValues };
-  });
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push('/signin');
+    }
+  }, [status, router]);
 
-  const [showFollowUp, setShowFollowUp] = useState(() => {
-      // Initialize showFollowUp based on ALL loaded responses
-      const initialShowFollowUp = {};
-      const allResponses = JSON.parse(localStorage.getItem("responses")) || {};
-      // Iterate through the current section's questions to set initial follow-up visibility
-      sectionData.questions.forEach(q => {
-          if (q.questionID && q.followUp && allResponses[q.questionID] === 'yes') {
-              initialShowFollowUp[q.questionID] = true;
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  if (!session) {
+    return null; // Or show nothing while redirecting
+  }
+
+
+
+  const [responses, setResponses] = useState({});
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+
+  const [surveyData, setSurveyData] = useState(null);
+  useEffect(() => {
+    if (id) {
+      const fetchSurvey = async () => {
+        try {
+          const response = await fetch(`/api/auth/history/continueSurvey?id=${id}`);
+          if (!response.ok) throw new Error("Failed to fetch survey.");
+
+          const data = await response.json();
+          setSurveyData(data);
+          if (data.responses) {
+            setResponses(data.responses); // Set responses from the fetched survey data
           }
-      });
-      return initialShowFollowUp;
-  });
+        } catch (error) {
+          console.error("Error fetching survey data:", error);
+        } 
+      };
 
+      fetchSurvey();
+    }
+  }, [id]);
+
+
+  const [showFollowUp, setShowFollowUp] = useState({}); // initially empty
+
+  useEffect(() => {
+    const initialShowFollowUp = {};
+    const allResponses = JSON.parse(localStorage.getItem("responses")) || {};
+  
+    sectionData.questions.forEach(q => {
+      if (
+        q.questionID &&
+        q.followUp &&
+        allResponses.hasOwnProperty(q.questionID) &&
+        allResponses[q.questionID] === 'yes'
+      ) {
+        initialShowFollowUp[q.questionID] = true;
+      }
+    });
+  
+    setShowFollowUp(initialShowFollowUp);
+  }, [sectionData.questions]);
+  
   const [showTooltip, setShowTooltip] = useState(false);
 
   // isDependencyMet now checks the global 'responses' state directly using questionID
@@ -60,22 +104,24 @@ export default function SurveySection({ sectionData, nextPath }) {
 
 
   // Enabled state calculation now uses the potentially global 'responses' state
-  const [enabledQuestions, setEnabledQuestions] = useState(() => {
-    const initialEnabled = {};
-    // Need to pass the initially loaded 'responses' to isDependencyMet
-    const initialResponses = JSON.parse(localStorage.getItem("responses")) || {};
-     sectionData.questions.forEach((q, index) => { // Added index for fallback key
-        const key = q.questionID || `noID-${sectionData.section}-${index}`; // Use index in fallback
-        if (q.questionID) {
-            // Pass the full set of initial responses for checking
-            initialEnabled[key] = isDependencyMet(q, initialResponses);
-        } else {
-             // If no questionID, assume enabled unless explicitly dependent within the same section (edge case)
-             initialEnabled[key] = !q.dependency || q.dependency.length === 0;
-        }
+
+  const [enabledQuestions, setEnabledQuestions] = useState({});
+  useEffect(() => {
+    const updatedEnabled = {};
+  
+    sectionData.questions.forEach((q, index) => {
+      const key = q.questionID || `noID-${sectionData.section}-${index}`;
+      if (q.questionID) {
+        updatedEnabled[key] = isDependencyMet(q, responses);
+      } else {
+        updatedEnabled[key] = !q.dependency || q.dependency.length === 0;
+      }
     });
-    return initialEnabled;
-  });
+  
+    setEnabledQuestions(updatedEnabled);
+  }, [responses, sectionData]);
+  
+  
 
 
   // useEffect recalculates dependencies based on the updated global 'responses'
@@ -187,21 +233,78 @@ export default function SurveySection({ sectionData, nextPath }) {
   };
 
 
-  // Save ALL responses (which are now keyed by questionID or fallback key) to localStorage
   const saveProgress = () => {
-    // No need to merge here if 'responses' state already holds everything relevant
+    if (!responses || Object.keys(responses).length === 0) {
+      alert("No progress to save!");
+      return;
+    }
     localStorage.setItem("responses", JSON.stringify(responses));
   };
+  
+  const saveToServer = async (responses, id, status = 'In Progress') => {
+    const currentTime = new Date().toISOString();
+    try {
+      const response = await fetch("/api/auth/history/saveProgress", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id,
+          responses,
+          lastSection: sectionData.section,
+          timestamp: currentTime,
+          status,
+        }),
+      });
+     
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error saving progress to server:", errorData.error);
+        return { success: false, message: "Failed to save progress to the server." };
+      }
+  
+      return { success: true, message: "Progress saved successfully." };
+    } catch (error) {
+      console.error("Error saving progress to server:", error);
+      return { success: false, message: "Failed to save progress to the server." };
+    }
+  };
+  
+  
+  const handlePause = async () => {
+    saveProgress(); // Save locally
+    const result = await saveToServer(responses, id); // Save to server
+  
+    if (result.success) {
+      alert(`Survey paused and progress saved at: ${new Date().toLocaleString()}`);
+    } else {
+      alert(result.message);
+    }
+  };
+  
 
-  const handlePause = () => {
+  const handleNext = async () => {
+    saveProgress(); 
+    console.log(nextPath); // Debugging log for nextPath
+  
+    if (nextPath === `../../results`) { // Match only `/results`, not `/results/id=${id}`
+      await saveToServer(responses, id, 'Completed');
+      console.log("Survey completed and saved to server.");
+    } else {
+      await saveToServer(responses, id);
+    }
+  
+    router.push(`${nextPath}?id=${id}`); // Navigate to the next page with id as query parameter
+  };
+  
+
+
+  const handleBack = async() => {
     saveProgress();
-    alert("Survey paused and progress saved!");
+    await saveToServer(responses, id);
+    router.push(`${prevPath}?id=${id}`); // Use the prevPath 
   };
 
-  const handleNext = () => {
-    saveProgress();
-    router.push(nextPath);
-  };
 
   const tooltipText =
     sectionData.tooltipText ||
@@ -399,7 +502,7 @@ export default function SurveySection({ sectionData, nextPath }) {
       <div className="flex justify-end mt-4 gap-5">
         {pathname !== "/survey/context" && ( // Assuming context is the first page
           <button
-            onClick={() => router.back()}
+            onClick={handleBack}
             className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors"
           >
             Back

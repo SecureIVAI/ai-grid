@@ -1,41 +1,52 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
-
-  useEffect(() => {
-    setEmail("");
-    setPassword("");
-  }, []);
+  const searchParams = useSearchParams();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+
     const result = await signIn("credentials", {
-      redirect: false,
       email,
       password,
+      redirect: false,
+      callbackUrl: searchParams?.get("callbackUrl") || "/",
     });
 
     if (result?.error) {
-      console.error("Login error:", result.error);
       setError("Invalid email or password");
-    } else {
-      router.push("/");
+    } else if (result?.url) {
+      router.push(result.url);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 text-black">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
         <h1 className="text-2xl font-bold text-center">Sign In</h1>
-        {error && <p className="text-red-500 text-center">{error}</p>}
+
+        {searchParams?.get("status") === "success" && (
+          <div className="p-3 text-sm text-blue-700 bg-blue-100 rounded-md">
+            Account successfully created
+          </div>
+        )}
+
+        {error && (
+          <div className="p-3 text-sm text-red-700 bg-red-100 rounded-md">
+            {error}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -63,13 +74,30 @@ export default function SignIn() {
               required
             />
           </div>
-          <div>
-            <button
-              type="submit"
-              className="w-full px-4 py-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          <button
+            type="submit"
+            className="w-full px-4 py-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          >
+            Sign In
+          </button>
+
+          <div className="text-sm text-center text-gray-600">
+            Don't have an account?{" "}
+            <Link
+              href="/register"
+              className="font-medium text-indigo-600 hover:text-indigo-500"
             >
-              Sign In
-            </button>
+              Register
+            </Link>
+          </div>
+
+          <div className="text-center">
+            <Link
+              href="/forgot-password"
+              className="text-sm text-indigo-600 hover:text-indigo-500"
+            >
+              Forgot your password?
+            </Link>
           </div>
         </form>
       </div>
