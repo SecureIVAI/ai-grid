@@ -1,20 +1,63 @@
-"use client";
+import AdminPageClient from "../components/AdminPageClient";
+import prisma from "@/lib/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+interface SafeUser {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  createdAt: string;
+}
 
-export default function Register() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
-  const router = useRouter();
+interface SafeAuditLog {
+  id: string;
+  action: string;
+  timestamp: string;
+  user: string;
+}
 
-  return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <p>Test Page</p>
-    </div>
-  );
+export default async function AdminPage() {
+  const session = await getServerSession(authOptions);
+
+  if (!session || session.user.role !== "admin") {
+    redirect("/");
+  }
+
+  const users = await prisma.user.findMany({
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      createdAt: true,
+    },
+  });
+
+  const logs = await prisma.auditLog.findMany({
+    orderBy: { timestamp: "desc" },
+    select: {
+      id: true,
+      action: true,
+      timestamp: true,
+      user: {
+        select: { name: true },
+      },
+    },
+  });
+
+  const safeUsers: SafeUser[] = users.map((u: any) => ({
+    ...u,
+    createdAt: new Date(u.createdAt).toLocaleString(),
+  }));
+  const safeLogs: SafeAuditLog[] = logs.map((log: any): SafeAuditLog => ({
+    id: log.id,
+    action: log.action,
+    timestamp: new Date(log.timestamp).toLocaleString(),
+    user: log.user?.name || "Unknown",
+  }));
+
+  return <AdminPageClient users={safeUsers} logs={safeLogs} currentUserId={session?.user?.id ?? ""} />;
 }

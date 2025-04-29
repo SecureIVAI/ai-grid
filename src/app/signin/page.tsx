@@ -15,20 +15,36 @@ export default function SignIn() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-
+  
     const result = await signIn("credentials", {
       email,
       password,
       redirect: false,
-      callbackUrl: searchParams?.get("callbackUrl") || "/",
     });
-
+  
     if (result?.error) {
       setError("Invalid email or password");
-    } else if (result?.url) {
-      router.push(result.url);
+    } else {
+      try {
+        const res = await fetch("/api/auth/session");
+        const session = await res.json();
+  
+        const role = session?.user?.role;
+  
+        if (role === "admin") {
+          router.push("/admin");
+        } else if (role === "reviewer") {
+          router.push("/reviewer");
+        } else {
+          router.push("/");
+        }
+      } catch (err) {
+        console.error("Failed to get session:", err);
+        router.push("/");
+      }
     }
   };
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -88,15 +104,6 @@ export default function SignIn() {
               className="font-medium text-indigo-600 hover:text-indigo-500"
             >
               Register
-            </Link>
-          </div>
-
-          <div className="text-center">
-            <Link
-              href="/forgot-password"
-              className="text-sm text-indigo-600 hover:text-indigo-500"
-            >
-              Forgot your password?
             </Link>
           </div>
         </form>

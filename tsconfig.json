@@ -3,12 +3,14 @@
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
+    "allowImportingTsExtensions": true,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -21,6 +23,9 @@
     "paths": {
       "@/*": ["./src/*"]
     }
+  },
+  "ts-node": {
+    "esm": true
   },
   "include": ["next-env.d.ts", "**/*.js", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/auth/route.js", "src/app/survey/page.js", "src/app/results/page.js"],
   "exclude": ["node_modules"]

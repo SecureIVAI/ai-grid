@@ -2,12 +2,14 @@
   "name": "ai-grid",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "server": "node server.js",
     "build": "next build",
     "start": "cross-env NODE_ENV=production node server.js",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "node --loader ts-node/esm prisma/seed.ts"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",
@@ -38,6 +40,10 @@
     "eslint-config-next": "15.2.0",
     "prisma": "^6.6.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
-  }
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "prisma": {
+  "seed": "node --loader ts-node/esm prisma/seed.ts"
+}
 }

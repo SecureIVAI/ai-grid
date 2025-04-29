@@ -45,6 +45,13 @@ export async function POST(request) {
         role: userRole
       }
     })
+    
+    await prisma.auditLog.create({
+      data: {
+        userId: user.id,
+        action: `${user.name || "Unknown"} created an account`
+      }
+    });
 
     console.log('User successfully registered:', user)
 
