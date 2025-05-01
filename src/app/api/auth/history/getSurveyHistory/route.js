@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma"; // Ensure this points to your Prisma setup
+import prisma from "@/lib/prisma"; 
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"; 
 
@@ -9,15 +9,26 @@ export async function GET() {
   if (!session) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
   }
+
   try {
-    // Fetch all survey records from the database
+    // Find the logged-in user by email
+    const user = await prisma.user.findUnique({
+      where: { email: session.user.email },
+    });
+
+    if (!user) {
+      return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
+    }
+
+
+    // Fetch only that user's survey history
     const surveys = await prisma.surveyHistory.findMany({
-      orderBy: { createdAt: "desc" }, // Example: Order by creation date
+      where: { userId: user.id },
+      orderBy: { createdAt: "desc" },
     });
 
     return new Response(JSON.stringify({ surveys }), { status: 200 });
-  } 
-  catch (error) {
+  } catch (error) {
     console.error("Error fetching survey history:", error);
     return new Response(JSON.stringify({ error: "Failed to fetch survey history." }), { status: 500 });
   }

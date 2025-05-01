@@ -40,13 +40,32 @@ export default function Home() {
               Resume
             </button>
             <button
-              onClick={() => {
-                localStorage.removeItem("responses");
-                router.push("/survey/context");
-              }}
-              className="px-8 py-3 text-lg font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            >
-              Start Survey
+            onClick={async () => {
+              localStorage.removeItem("responses");
+              localStorage.removeItem("surveyId");
+
+              try {
+                const res = await fetch("/api/auth/history/startSurvey", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    timestamp: new Date().toISOString(),
+                  }),
+                });
+
+                const data = await res.json();
+                if (!res.ok || !data?.id) throw new Error("Survey creation failed");
+
+                localStorage.setItem("surveyId", data.id);              
+                router.push(`/survey/context?id=${data.id}`);
+              } catch (error) {
+                console.error("Failed to start new survey:", error);
+                alert("Could not start new survey. Please try again.");
+              }
+            }}
+            className="px-8 py-3 text-lg font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          >
+            Start Survey
             </button>
           </div>
         )

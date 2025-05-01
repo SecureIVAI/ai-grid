@@ -18,6 +18,7 @@ export async function POST(req) {
         timestamp: new Date(timestamp),
         status: "In Progress",
         lastSection: "context",
+        userId: session.user.id,
       },
     });
     console.log("New survey created with ID:", newSurvey.id);

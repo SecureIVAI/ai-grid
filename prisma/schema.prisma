@@ -19,6 +19,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   AuditLog      AuditLog[]
+  surveyHistories SurveyHistory[] 
 }
 
 model Account {
@@ -70,4 +71,6 @@ model SurveyHistory {
   createdAt DateTime @default(now())
   status    String   // e.g., "In Progress", "Completed"
   lastSection String? // Track the last section the user was at in the survey
+  userId      String?   // foreign key
+  user        User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
 }

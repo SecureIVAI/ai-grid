@@ -1,15 +1,22 @@
-const express = require('express');
-const multer = require('multer');
-const { google } = require('googleapis');
-require('dotenv').config();
-const cors = require('cors');
-const { Readable } = require('stream'); // Import Readable stream
-const path = require('path');
+import express from 'express';
+import multer from 'multer';
+import { google } from 'googleapis';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import { Readable } from 'stream';
+import path from 'path';
+
+// Get the __dirname equivalent in ES Modules
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+
+dotenv.config(); // Initialize dotenv
+
 const app = express();
 const upload = multer({ storage: multer.memoryStorage() });
 const folderId = '1hKyzcpRkwBnfF3LXFqRs0dUgvCLSvjuI'; // Hardcoded folder id
 
 app.use(cors());
+
 const auth = new google.auth.GoogleAuth({
   keyFile: path.join(__dirname, 'config', 'credentials.json'),
   scopes: ['https://www.googleapis.com/auth/drive.file'],
