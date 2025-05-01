@@ -5,9 +5,11 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import { Readable } from 'stream';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 // Get the __dirname equivalent in ES Modules
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config(); // Initialize dotenv
 
