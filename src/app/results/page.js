@@ -166,7 +166,6 @@ export default function ResultsPage() {
 
       {/*Risk Area Calculation*/}
       const sectionCounts = countQuestionsBySpecificSection(questionsData);
-      // Inside your useEffect, add this:
 const groupSectionsByRiskArea = (sectionCounts, riskAreas, responses) => {
   // Create a map of section to questions for efficient lookup
   const sectionQuestionsMap = {};
@@ -444,7 +443,7 @@ const groupSectionsByRiskArea = (sectionCounts, riskAreas, responses) => {
         <div className="flex flex-col items-center w-full max-w-7xl mx-auto pt-24 mb-10 bg-gray-50">
           <div className="flex w-full items-center justify-between pb-6 border-b-3 border-amber-700">
             <h1 className="text-6xl font-bold text-blue-700">
-              Survey Results
+              Results Dashboard
             </h1>
             <img src="/logo.png" alt="Logo" className="h-16 w-16" />
           
