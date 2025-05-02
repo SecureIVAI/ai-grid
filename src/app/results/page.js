@@ -8,6 +8,8 @@ import { Radar } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import ReactSpeedometer from "react-d3-speedometer";
 
+import { downloadPDFReport } from '@/utils/downloadPDFReport';
+
 
 ChartJS.register(...registerables, ChartDataLabels);
 
@@ -427,25 +429,30 @@ const groupSectionsByRiskArea = (sectionCounts, riskAreas, responses) => {
   
 
   return (<>
-    <div className="flex flex-col items-center w-full max-w-7xl mx-auto pt-24 min-h-screen bg-gray-50 p-2">
+    <div className="relative w-full bg-gray-50 p-4  "> 
+      <button
+        onClick={() => downloadPDFReport('results-container')}
+        className="absolute left-3/4 transform -translate-x-1/2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md flex items-center gap-2 transition-colors"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+        </svg>
+        Download Report (PDF)
+      </button>
+    </div>
+    <div id="results-container" className="flex flex-col items-center w-full max-w-7xl mx-auto pt-15 pb-20 min-h-screen bg-gray-50 p-2">
         <div className="flex flex-col items-center w-full max-w-7xl mx-auto pt-24 mb-10 bg-gray-50">
           <div className="flex w-full items-center justify-between pb-6 border-b-3 border-amber-700">
-            <h1 className="text-6xl font-bold">
+            <h1 className="text-6xl font-bold text-blue-700">
               Survey Results
             </h1>
             <img src="/logo.png" alt="Logo" className="h-16 w-16" />
-            <button
-              className="bg-blue-500 text-white px-4 py-2 rounded"
-              onClick={() => {
-                window.location.href = "/";
-              }}>
-              Download Results
-            </button>
+          
           </div>
         </div>
 
 
-        <div className="flex flex-col md:flex-row w-full md:space-x-8 space-y-8 md:space-y-0 divide-x-1 divide-y-1 divide-gray-400">
+        <div className="flex flex-col md:flex-row w-full md:space-x-8 space-y-8 md:space-y-0 divide-x-1  divide-gray-400">
 
 
           {/* Radar Chart Section */}
@@ -513,7 +520,7 @@ const groupSectionsByRiskArea = (sectionCounts, riskAreas, responses) => {
                 </div>
 
                 {/* Medium Risk List */}
-                <div className="mt-4 p-4 bg-amber-200 border border-gray-300 rounded text-gray-700 w-full">
+                <div className="mt-4 p-4 bg-yellow-100 border border-gray-300 rounded text-gray-700 w-full">
                   <h2 className="text-lg font-semibold mb-2 text-center">Medium Risks</h2>
                   <ul className="list-disc ml-6">
                   {questionCounts.mediumRisk
@@ -544,18 +551,21 @@ const groupSectionsByRiskArea = (sectionCounts, riskAreas, responses) => {
                   </ul>
                 </div>
               </div>
-              
-
-          
-              
+             
           </div>
-
           
 
         </div>
 
         
     </div>
+ 
+
+      {/* Copyright footer - add this at the bottom of your component */}
+      <footer   className="mt-auto py-6 w-full text-center text-sm text-gray-500 border-t border-gray-200">
+        <p>Product by Secure IVAI • IT Services and IT Consulting • © {new Date().getFullYear()}</p>
+      </footer>
+
     </>
 
 
