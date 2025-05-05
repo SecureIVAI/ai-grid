@@ -23,7 +23,7 @@ Create a .env file at the root
 ```
 DATABASE_URL="postgresql://<username>:<password>@<host>:<port>/<database>"
 NEXTAUTH_SECRET="your_auth_secret_string"
-NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_URL="http://localhost:3001"
 ADMIN_EMAIL="admin@mail.com"
 ADMIN_PASSWORD="password"
 ```
