@@ -58,4 +58,7 @@ Navigate to https://console.cloud.google.com/ and select an existing project or 
 8. Then make sure to share this folder and give edit permissions to your new googleservice account email
 
 ## Running the App
+In your first terminal enter:
+```node server.js```
+Then in a second terminal:
 ```npm run dev```
