@@ -47,4 +47,15 @@ Run `npx prisma db push` whenever you make modifications to the database schema 
 NOTE: To create a new admin user or overwrite the default one with new credentials, run ```npm run seed```
 ## Running the App
 
+## Setting up Google Drive Storage 
+Navigate to https://console.cloud.google.com/ and select an existing project or create a new project and follow the steps:
+1. Select IAM & Admin
+2. Select Service Accounts and Create a new Service Account (type in a service id name and ignore optional settings)
+3. Select the service account and go to keys
+4. Add key -> Create new key -> Select Json
+5. In the root of your project folder create a folder titled ```config``` and put the downloaded json file in this folder
+6. Rename the file to credentials.json
+7. In server.js (in the project root) change folderId to the folderId of the google drive folder you wish to store documents in (To find the folderId of your folder copy the url after ```/folders/```
+8. Then make sure to share this folder and give edit permissions to your new googleservice account email
+
 ```npm run dev```
