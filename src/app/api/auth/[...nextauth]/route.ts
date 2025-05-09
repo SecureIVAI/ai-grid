@@ -32,13 +32,6 @@ export const authOptions: NextAuthOptions = {
           throw new Error('Invalid password');
         }
 
-        await prisma.auditLog.create({
-          data: {
-            userId: user.id,
-            action: `${user.name || "Unknown"} signed in`
-          }
-        });
-
         return {
           id: user.id,
           email: user.email,

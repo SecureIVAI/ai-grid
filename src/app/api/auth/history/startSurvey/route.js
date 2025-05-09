@@ -23,6 +23,13 @@ export async function POST(req) {
     });
     console.log("New survey created with ID:", newSurvey.id);
 
+    await prisma.auditLog.create({
+      data: {
+        userId: session.user.id,
+        action: `${session.user.name || "Unknown"} Started a new survey with ID ${newSurvey.id}`,
+      }
+    });
+
     return new Response(JSON.stringify({ id: newSurvey.id }), { status: 200 });
   } catch (error) {
     console.error("Error starting new survey:", error);
