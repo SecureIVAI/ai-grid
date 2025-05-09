@@ -57,7 +57,7 @@ DATABASE_URL="postgresql://<user>:<password>@<host>:<port>/<database-name>"
 
 # NextAuth
 NEXTAUTH_SECRET="<paste output of this command: openssl rand -base64 32>"
-NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_URL="http://localhost:3001"
 
 # default admin (used by seed script)
 ADMIN_EMAIL="admin@email.com"
@@ -119,7 +119,7 @@ ai-grid/
 │  └─ logo.png                  
 │
 ├─ data/                        # static JSON (e.g. questions.json)
-│  └─ logo.png
+│  └─ questions.json
 │
 ├─ src/
 │  ├─ app/                      # Next.js App‑Router (server + client pages)
