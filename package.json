@@ -54,5 +54,8 @@
   },
   "prisma": {
     "seed": "node --loader ts-node/esm prisma/seed.ts"
+  },
+  "optionalDependencies": {
+  "@tailwindcss/oxide-linux-x64-gnu": "latest"
   }
 }
