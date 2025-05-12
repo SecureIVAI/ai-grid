@@ -27,6 +27,6 @@
   "ts-node": {
     "esm": true
   },
-  "include": ["next-env.d.ts", "**/*.js", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/auth/route.js", "src/app/survey/page.js", "src/app/results/page.js"],
+  "include": ["next-env.d.ts", "**/*.js", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/auth/route.js", "src/app/survey/page.js", "src/app/results/page.js", "prisma/seed.mjs"],
   "exclude": ["node_modules"]
 }
