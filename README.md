@@ -55,6 +55,9 @@ Create a .env file at the root
 # PostgreSQL
 # When deploying to Vercel and integrating with Supabase, you dont need to include this manually.
 DATABASE_URL="postgresql://<user>:<password>@<host>:<port>/<database-name>"
+# Not needed when running locally.
+DIRECT_URL=""
+
 
 # NextAuth
 NEXTAUTH_SECRET="<paste output of this command: openssl rand -base64 32 OR visit https://string-gen.vercel. and copy from there>"
