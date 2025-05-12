@@ -1,4 +1,4 @@
-import prisma from "../src/lib/prisma.js"; // 👈 must use .js when using ts-node/esm
+import prisma from "../src/lib/prisma.js";
 import bcrypt from "bcryptjs";
 
 async function main() {
