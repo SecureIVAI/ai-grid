@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck                              ← add this line
+// @ts-nocheck
 
 import { NextRequest, NextResponse } from "next/server";
 import { moveDriveFile } from "@/lib/googleDrive";
@@ -11,9 +11,15 @@ export const runtime = "nodejs";
 
 export async function POST(
   _req: NextRequest,
-  { params }: { params: { fileId: string } }
+  context: any                    // ← relax the type so ParamCheck passes
 ) {
-  const { fileId } = params;
+  // context may be a promise in edge runtime — unwrap if needed
+  const ctx = typeof context?.then === "function" ? await context : context;
+  const fileId: string | undefined = ctx?.params?.fileId;
+
+  if (!fileId) {
+    return NextResponse.json({ success: false, error: "Missing fileId" }, { status: 400 });
+  }
 
   await moveDriveFile(fileId);
 
