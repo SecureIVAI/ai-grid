@@ -203,9 +203,10 @@ export default function SurveySection({ sectionData, nextPath, prevPath }) {
      formData.append("file", file);
 
      try {
-       const res = await axios.post("http://localhost:3000/upload", formData, {
-         headers: { "Content-Type": "multipart/form-data" },
-       });
+       const res = await axios.post("/api/drive/upload", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
 
        const link = res.data.link;
 

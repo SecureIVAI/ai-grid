@@ -56,13 +56,24 @@ Create a .env file at the root
 DATABASE_URL="postgresql://<user>:<password>@<host>:<port>/<database-name>"
 
 # NextAuth
-NEXTAUTH_SECRET="<paste output of this command: openssl rand -base64 32>"
+NEXTAUTH_SECRET="<paste output of this command: openssl rand -base64 32 OR visit https://string-gen.vercel. and copy from there>"
 NEXTAUTH_URL="http://localhost:3001"
 
 # default admin (used by seed script)
 ADMIN_EMAIL="admin@email.com"
 ADMIN_PASSWORD="password"
+
+# Google Drive
+GOOGLE_SERVICE_ACCOUNT_KEY='{
+  "type": "service_account",
+  "project_id": "...",
+  ...
+}'
+
+GDRIVE_FOLDER_ID=<paste_folder_id_here>
+GDRIVE_APPROVED_FOLDER_ID=<paste_folder_id_here>
 ```
+
 <br/>
 
 ### 4️⃣ Set up Prisma
@@ -87,15 +98,19 @@ npm run seed
 <br/>
 
 ### 5️⃣ Setting up Google Drive Storage 
+
+#### Enable the Drive API & create a service account
 Navigate to https://console.cloud.google.com/ and select an existing project or create a new project and follow the steps:
-1. Select IAM & Admin
-2. Select Service Accounts and Create a new Service Account (type in a service id name and ignore optional settings)
-3. Select the service account and go to keys
-4. Add key -> Create new key -> Select Json
-5. In the root of your project folder create a folder titled ```config``` and put the downloaded json file in this folder
-6. Rename the file to credentials.json
-7. In server.js (in the project root) change folderId to the folderId of the google drive folder you wish to store documents in (To find the folderId of your folder copy the url after ```/folders/```
-8. Then make sure to share this folder and give edit permissions to your new googleservice account email
+1. In the side bar, navigate to **APIs & Services** ▸ **Library** → search **“Google Drive API”** → Enable.
+2. Then in the sidebar again navigate to **IAM & Admin** ▸ **Service Accounts** → **Create service account**
+3. After the account appears, click it → **Keys** ▸ **Add key** ▸ **Create new key** ▸ **JSON**.
+
+Next, navigate to https://drive.google.com
+1. Create two working folders in google drive. Name one **"AI-GRID Uploads"** and the other **"AI-GRID Approved"** (or something similar).
+2. Open the folders, in the address bar copy the long ID after /folders/.
+3. In your .env file paste them under **GDRIVE_FOLDER_ID** and **GDRIVE_APPROVED_FOLDER_ID** appropriately. 
+4. For both folders: **Share** ▸ **Add** → paste the service‑account e‑mail
+(ex: ai-grid-drive-uploader@<project‑id>.iam.gserviceaccount.com) → set Editor.
 
 <br/>
 

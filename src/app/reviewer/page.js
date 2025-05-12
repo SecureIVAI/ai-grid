@@ -1,45 +1,50 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import axios from "axios";
+import { useSession } from "next-auth/react";
 
 export default function ReviewerPage() {
   const [files, setFiles] = useState([]);
+  const { data: session } = useSession();        // ← client‑side session
 
+  /* ---------- fetch list ---------- */
   useEffect(() => {
     const fetchFiles = async () => {
       try {
-        const response = await fetch("http://localhost:3000/files");
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        const data = await response.json();
+        const { data, status } = await axios.get("/api/drive/files");
+        if (status !== 200) throw new Error(`HTTP error! status: ${status}`);
         setFiles(data);
-      } catch (error) {
-        console.error("Error fetching files:", error);
+      } catch (err) {
+        console.error("Error fetching files:", err);
       }
     };
-
     fetchFiles();
   }, []);
 
+  /* ---------- approve (move) file ---------- */
   const handleValidate = async (fileId) => {
     try {
-      const response = await fetch(`http://localhost:3000/delete/${fileId}`, {
-        method: "DELETE",
+      const { status } = await axios.post(`/api/drive/approve/${fileId}`);
+      if (status !== 200) throw new Error(`HTTP error! status: ${status}`);
+
+      // remove the moved file from local state
+      setFiles((prev) => prev.filter((file) => file.id !== fileId));
+
+      await axios.post("/api/audit", {
+        userId: session?.user?.id,
+        action: `${session?.user?.name} approved file ${fileId}`,
       });
-
-      if (!response.ok) {
-        throw new Error("Failed to delete file.");
-      }
-
-      // Remove the deleted file from state
-      setFiles((prevFiles) => prevFiles.filter((file) => file.id !== fileId));
-    } catch (error) {
-      console.error("Error validating file:", error);
+    } catch (err) {
+      console.error("Error validating file:", err);
     }
   };
 
+  /* ---------- UI ---------- */
   return (
     <div className="flex flex-col min-h-screen bg-white p-8 max-w-3xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Review Uploaded Documents</h1>
+
       {files.map((file) => (
         <div key={file.id} className="mb-4 border p-4 rounded">
           <div className="flex items-center justify-between">
