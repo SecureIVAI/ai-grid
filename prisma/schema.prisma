@@ -1,11 +1,18 @@
-generator client {
-  provider = "prisma-client-js"
+datasource db {
+  provider   = "postgresql"
+
+  // Use the non‑pooled URL (5432) for migrations
+  url        = env("POSTGRES_URL_NON_POOLING")
+
+  // Use the pooled URL (6543) for Prisma Client at runtime
+  directUrl  = env("POSTGRES_PRISMA_URL")
 }
 
-datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL")
+generator client {
+  provider = "prisma-client-js"
+  output   = "./node_modules/@prisma/client"
 }
+
 
 model User {
   id            String     @id @default(cuid())
