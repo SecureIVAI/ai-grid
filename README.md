@@ -56,6 +56,7 @@ Create a .env file at the root
 DATABASE_URL="postgresql://<user>:<password>@<host>:<port>/<database-name>"
 
 # NextAuth
+# DELETE THIS WHEN DEPLOYING TO VERCEL IF YOU ARE INTEGRATING WITH SUPABASE
 NEXTAUTH_SECRET="<paste output of this command: openssl rand -base64 32 OR visit https://string-gen.vercel. and copy from there>"
 NEXTAUTH_URL="http://localhost:3001"
 

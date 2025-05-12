@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { uploadToDrive } from "@/lib/googleDrive";
 
-export const runtime = "nodejs"; // need Node APIs (stream, Buffer)
+export const runtime = "nodejs";
 
 export async function POST(req: NextRequest) {
   try {
