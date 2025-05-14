@@ -12,7 +12,7 @@ export const runtime = "nodejs";
 
 export async function DELETE(
   _req: NextRequest,
-  context: any               // ← relax type so ParamCheck passes
+  context: any
 ) {
   // unwrap if the context happens to be a Promise
   const ctx = typeof context?.then === "function" ? await context : context;

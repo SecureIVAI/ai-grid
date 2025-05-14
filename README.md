@@ -60,7 +60,7 @@ DIRECT_URL=""
 
 
 # NextAuth
-NEXTAUTH_SECRET="<paste output of this command: openssl rand -base64 32 OR visit https://string-gen.vercel. and copy from there>"
+NEXTAUTH_SECRET="<paste output of this command: openssl rand -base64 32 OR visit https://string-gen.vercel.app/ and copy from there>"
 NEXTAUTH_URL="http://localhost:3001"
 
 # default admin (used by seed script)
